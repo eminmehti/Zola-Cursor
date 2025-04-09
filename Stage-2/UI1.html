@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZOLA Business Setup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #003366; /* Navy Blue */
+      --primary-hover: #004080;
+      --primary-light: #E5EBF2;
+      --secondary: #003366; /* Navy Blue */
+      --bg-white: #FFFFFF;
+      --bg-light: #F2F2F2; /* Soft Gray */
+      --text-dark: #003366; /* Navy Blue for headings */
+      --text-secondary: #333333; /* Dark gray for body text */
+      --text-light: #666666;
+      --border-light: #CCCCCC; /* Metallic silver */
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-secondary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    
+    header {
+      background-color: var(--bg-white);
+      padding: 1.5rem 2.5rem;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 4px;
+      background-color: var(--border-light);
+      position: relative;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+      transition: var(--transition);
+    }
+    
+    .main-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 2rem;
+    }
+    
+    .content-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      max-width: 1000px;
+    }
+    
+    .card {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 2.5rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .icon-container {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background-color: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .icon-container svg {
+      width: 40px;
+      height: 40px;
+      color: var(--primary);
+    }
+    
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background-color: var(--primary);
+      color: white;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 1rem 1.75rem;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .btn svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 2rem 1.5rem;
+      }
+      
+      .content-wrapper {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .card {
+        padding: 2rem 1.5rem;
+      }
+      
+      .icon-container {
+        width: 70px;
+        height: 70px;
+      }
+      
+      .icon-container svg {
+        width: 35px;
+        height: 35px;
+      }
+      
+      h2 {
+        font-size: 1.35rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ZOLA</div>
+  </header>
+  
+  <div class="progress-container">
+    <div class="progress-bar"></div>
+  </div>
+  
+  <div class="main-container">
+    <div class="content-wrapper">
+      <div class="card">
+        <div class="icon-container">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <h2>I know what I want</h2>
+        <p>Fill in our form to get your custom-tailored business setup proposal</p>
+        <button class="btn" onclick="window.location.href='/stage2/questionnaire'">
+          Fill the form
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="card">
+        <div class="icon-container">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h2>I need guidance</h2>
+        <p>Take our step-by-step questionnaire and receive our tailored solutions</p>
+        <button class="btn" onclick="window.location.href='/stage2/questionnaire'">
+          Take the questionnaire
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Set progress bar to initial step
+    document.querySelector('.progress-bar').style.width = "5%";
+  </script>
+</body>
+</html>
+

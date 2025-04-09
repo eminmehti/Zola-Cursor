@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZOLA - Tell Us About Your Business</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #003366; /* Navy Blue */
+      --primary-hover: #004080;
+      --primary-light: #E5EBF2;
+      --secondary: #003366; /* Navy Blue */
+      --bg-white: #FFFFFF;
+      --bg-light: #F2F2F2; /* Soft Gray */
+      --text-dark: #003366; /* Navy Blue for headings */
+      --text-secondary: #333333; /* Dark gray for body text */
+      --text-light: #666666;
+      --border-light: #CCCCCC; /* Metallic silver */
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-secondary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    
+    header {
+      background-color: var(--bg-white);
+      padding: 1.5rem 2.5rem;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 4px;
+      background-color: var(--border-light);
+      position: relative;
+    }
+    
+    .progress-fill {
+      width: 20%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+      transition: var(--transition);
+    }
+    
+    .main-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 3rem 2.5rem;
+    }
+    
+    .content-card {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 700px;
+      transition: var(--transition);
+    }
+    
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .subtitle {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+    
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    
+    .option-card {
+      background-color: var(--bg-light);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .option-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .option-card.active {
+      border-color: var(--primary);
+      background-color: var(--primary-light);
+    }
+    
+    .option-card.active::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 2.5rem 2.5rem 0;
+      border-color: transparent var(--primary) transparent transparent;
+    }
+    
+    .option-card.active::after {
+      content: '✓';
+      position: absolute;
+      right: 0.5rem;
+      top: 0.25rem;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    
+    .option-content {
+      flex: 1;
+    }
+    
+    .option-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    .option-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+    
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+    }
+    
+    .btn {
+      padding: 1rem 1.75rem;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .btn-next {
+      background-color: var(--text-light);
+      color: white;
+      border: none;
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    
+    .btn-next.enabled {
+      background-color: var(--primary);
+      opacity: 1;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .btn-next.enabled:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        padding: 1.25rem 1.5rem;
+      }
+      
+      .main-container {
+        padding: 2rem 1.5rem;
+      }
+      
+      .content-card {
+        padding: 1.75rem;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ZOLA</div>
+  </header>
+  
+  <div class="progress-container">
+    <div class="progress-fill"></div>
+  </div>
+  
+  <div class="main-container">
+    <div class="content-card">
+      <h1>Tell us about your business</h1>
+      <p class="subtitle">
+        Your business category will help us determine the right trade licence and business activity 
+        for your company.
+      </p>
+      
+      <div class="options-grid">
+        <div class="option-card" data-value="professional">
+          <div class="option-content">
+            <div class="option-title">Professional services</div>
+            <div class="option-desc">Consulting, legal, financial, IT, marketing, and other knowledge-based services</div>
+          </div>
+        </div>
+        
+        <div class="option-card" data-value="trading">
+          <div class="option-content">
+            <div class="option-title">Trading</div>
+            <div class="option-desc">Import/export, retail, wholesale, e-commerce, and distribution businesses</div>
+          </div>
+        </div>
+        
+        <div class="option-card" data-value="manufacturing">
+          <div class="option-content">
+            <div class="option-title">Manufacturing</div>
+            <div class="option-desc">Production of goods, industrial processing, and product assembly</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="button-container">
+        <button class="btn btn-next" disabled id="nextButton">
+          Continue
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const options = document.querySelectorAll('.option-card');
+    const nextBtn = document.getElementById('nextButton');
+    let selectedValue = null;
+    
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        // Clear active state from all options
+        options.forEach(o => o.classList.remove('active'));
+        // Set the clicked one to active
+        option.classList.add('active');
+        
+        // Remember the selected value
+        selectedValue = option.getAttribute('data-value');
+        
+        // Enable the Next button
+        nextBtn.classList.add('enabled');
+        nextBtn.removeAttribute('disabled');
+      });
+    });
+    
+    // When Next is clicked, we send data to server, then go to UI4
+    nextBtn.addEventListener('click', async () => {
+      if (selectedValue) {
+        try {
+          await fetch('/stage2/save-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              question: 'businessCategory',
+              answer: selectedValue
+            })
+          });
+          window.location.href = '/stage2/ui4';
+        } catch (err) {
+          console.error('Error saving answer:', err);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+

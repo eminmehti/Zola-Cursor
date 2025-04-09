@@ -1,0 +1,101 @@
+document.addEventListener('DOMContentLoaded', () => {
+  // Feature carousel functionality
+  const track = document.getElementById('featuresTrack');
+  const cards = document.querySelectorAll('.feature-card');
+  const nextBtn = document.querySelector('.control-btn.next');
+  const prevBtn = document.querySelector('.control-btn.prev');
+  const dots = document.querySelectorAll('.dot');
+  
+  let currentIndex = 0;
+  const cardWidth = cards[0].offsetWidth + 24; // Card width + gap
+  const maxIndex = cards.length - 1;
+  
+  // Initialize responsive values
+  function updateCardWidth() {
+    const viewportWidth = window.innerWidth;
+    const cardsVisible = viewportWidth > 1024 ? 3 : viewportWidth > 640 ? 2 : 1;
+    return document.querySelector('.feature-card').offsetWidth + 24;
+  }
+  
+  // Update carousel position
+  function updateCarousel(index) {
+    currentIndex = index;
+    
+    // Handle edge cases
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
+    
+    // Calculate scroll position
+    const scrollAmount = currentIndex * updateCardWidth();
+    
+    // Apply smooth transition
+    track.style.transform = `translateX(-${scrollAmount}px)`;
+    
+    // Update active states
+    cards.forEach((card, i) => {
+      card.classList.toggle('active', i === currentIndex);
+    });
+    
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentIndex);
+    });
+    
+    // Update button states
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex === maxIndex;
+    
+    prevBtn.style.opacity = currentIndex === 0 ? 0.5 : 1;
+    nextBtn.style.opacity = currentIndex === maxIndex ? 0.5 : 1;
+  }
+  
+  // Event listeners
+  nextBtn.addEventListener('click', () => {
+    updateCarousel(currentIndex + 1);
+  });
+  
+  prevBtn.addEventListener('click', () => {
+    updateCarousel(currentIndex - 1);
+  });
+  
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      updateCarousel(i);
+    });
+  });
+  
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => {
+      updateCarousel(i);
+    });
+  });
+  
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        
+        // If it's the features section, animate cards sequentially
+        if (entry.target.classList.contains('features-showcase')) {
+          cards.forEach((card, index) => {
+            setTimeout(() => {
+              card.classList.add('revealed');
+            }, 100 * index);
+          });
+        }
+      }
+    });
+  }, { threshold: 0.2 });
+  
+  // Observe elements
+  observer.observe(document.querySelector('.features-showcase'));
+  
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    // Update carousel with current index
+    updateCarousel(currentIndex);
+  });
+  
+  // Initialize
+  updateCarousel(0);
+});

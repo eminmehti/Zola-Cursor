@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZOLA - Office Space Selection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #003366; /* Navy Blue */
+      --primary-hover: #004080;
+      --primary-light: #E5EBF2;
+      --secondary: #003366; /* Navy Blue */
+      --bg-white: #FFFFFF;
+      --bg-light: #F2F2F2; /* Soft Gray */
+      --text-dark: #003366; /* Navy Blue for headings */
+      --text-secondary: #333333; /* Dark gray for body text */
+      --text-light: #666666;
+      --border-light: #CCCCCC; /* Metallic silver */
+      --success: #10B981;
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-secondary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    
+    header {
+      background-color: var(--bg-white);
+      padding: 1.5rem 2.5rem;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 4px;
+      background-color: var(--border-light);
+      position: relative;
+    }
+    
+    .progress-fill {
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+      transition: var(--transition);
+    }
+    
+    .main-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 4rem 2rem;
+    }
+    
+    .content-card {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 3rem;
+      width: 100%;
+      max-width: 600px;
+      transition: var(--transition);
+    }
+    
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+    
+    .options-group {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    
+    .option-item {
+      position: relative;
+    }
+    
+    .option-item input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+    
+    .option-card {
+      background-color: var(--bg-light);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .option-item:hover .option-card {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .option-item input:checked ~ .option-card {
+      border-color: var(--primary);
+      background-color: var(--primary-light);
+    }
+    
+    .checkbox-custom {
+      min-width: 24px;
+      height: 24px;
+      border: 2px solid var(--text-light);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    
+    .option-item input:checked ~ .option-card .checkbox-custom {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+    
+    .checkbox-icon {
+      color: white;
+      opacity: 0;
+      transition: var(--transition);
+      width: 16px;
+      height: 16px;
+    }
+    
+    .option-item input:checked ~ .option-card .checkbox-icon {
+      opacity: 1;
+    }
+    
+    .option-label {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    
+    .buttons-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .btn {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .btn-back {
+      background-color: var(--bg-white);
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border-light);
+    }
+    
+    .btn-back:hover {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+    
+    .btn-next {
+      background-color: var(--text-light);
+      color: white;
+      border: none;
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    
+    .btn-next.enabled {
+      background-color: var(--primary);
+      opacity: 1;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .btn-next.enabled:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 2rem 1.5rem;
+      }
+      
+      .content-card {
+        padding: 2rem 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.75rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+      
+      .btn {
+        padding: 0.875rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ZOLA</div>
+  </header>
+  
+  <div class="progress-container">
+    <div class="progress-fill"></div>
+  </div>
+  
+  <div class="main-container">
+    <div class="content-card">
+      <h1>What type of workspace do you need?</h1>
+      <p class="subtitle">
+        Select the workspace options that match your business needs. This helps us calculate 
+        your optimal setup costs and determine the best locations.
+      </p>
+      
+      <div class="options-group">
+        <label class="option-item">
+          <input type="checkbox" value="Virtual office">
+          <div class="option-card">
+            <div class="checkbox-custom">
+              <svg class="checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span class="option-label">Virtual office</span>
+          </div>
+        </label>
+        
+        <label class="option-item">
+          <input type="checkbox" value="Physical office">
+          <div class="option-card">
+            <div class="checkbox-custom">
+              <svg class="checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span class="option-label">Physical office</span>
+          </div>
+        </label>
+        
+        <label class="option-item">
+          <input type="checkbox" value="Shop front">
+          <div class="option-card">
+            <div class="checkbox-custom">
+              <svg class="checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span class="option-label">Shop front</span>
+          </div>
+        </label>
+        
+        <label class="option-item">
+          <input type="checkbox" value="Business centre">
+          <div class="option-card">
+            <div class="checkbox-custom">
+              <svg class="checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span class="option-label">Business centre</span>
+          </div>
+        </label>
+        
+        <label class="option-item">
+          <input type="checkbox" value="Warehouse">
+          <div class="option-card">
+            <div class="checkbox-custom">
+              <svg class="checkbox-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span class="option-label">Warehouse</span>
+          </div>
+        </label>
+      </div>
+      
+      <div class="buttons-row">
+        <button class="btn btn-back" id="prevButton">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+          </svg>
+          Back
+        </button>
+        
+        <button class="btn btn-next" id="nextButton" disabled>
+          Continue
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const checkboxes = document.querySelectorAll('.option-item input[type="checkbox"]');
+    const nextBtn = document.getElementById('nextButton');
+    const prevBtn = document.getElementById('prevButton');
+    
+    function updateNextButton() {
+      const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+      if (anyChecked) {
+        nextBtn.classList.add('enabled');
+        nextBtn.disabled = false;
+      } else {
+        nextBtn.classList.remove('enabled');
+        nextBtn.disabled = true;
+      }
+    }
+    
+    // Listen for changes to checkboxes
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', updateNextButton);
+    });
+    
+    // Next -> POST selected officeSpace to server, then go to /ui6
+    nextBtn.addEventListener('click', async () => {
+      // Gather all selected values
+      const selectedValues = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+      
+      if (selectedValues.length === 0) return;
+      
+      try {
+        await fetch('/stage2/save-answer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question: 'officeSpace',
+            answer: selectedValues
+          })
+        });
+        window.location.href = '/stage2/ui6';
+      } catch (err) {
+        console.error('Error saving officeSpace:', err);
+      }
+    });
+    
+    // Previous -> go to /questionnaire (UI2)
+    prevBtn.addEventListener('click', () => {
+      window.location.href = '/stage2/questionnaire';
+    });
+  </script>
+</body>
+</html>
+
+
+
+            
+
+
+
+

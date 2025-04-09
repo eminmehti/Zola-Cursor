@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZOLA – Choose Your Business Activity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #003366; /* Navy Blue */
+      --primary-hover: #004080;
+      --primary-light: #E5EBF2;
+      --secondary: #003366; /* Navy Blue */
+      --bg-white: #FFFFFF;
+      --bg-light: #F2F2F2; /* Soft Gray */
+      --text-dark: #003366; /* Navy Blue for headings */
+      --text-secondary: #333333; /* Dark gray for body text */
+      --text-light: #666666;
+      --border-light: #CCCCCC; /* Metallic silver */
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-secondary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    
+    header {
+      background-color: var(--bg-white);
+      padding: 1.5rem 2.5rem;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 4px;
+      background-color: var(--border-light);
+      position: relative;
+    }
+    
+    .progress-fill {
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+      transition: var(--transition);
+    }
+    
+    .main-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 4rem 2rem;
+    }
+    
+    .content-card {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 3rem;
+      width: 100%;
+      max-width: 600px;
+      transition: var(--transition);
+    }
+    
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+    
+    .search-container {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+    
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      width: 20px;
+      height: 20px;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      font-size: 1rem;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background-color: var(--bg-white);
+      color: var(--text-dark);
+      transition: var(--transition);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+    
+    .search-input::placeholder {
+      color: var(--text-light);
+    }
+    
+    .autocomplete-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-height: 240px;
+      overflow-y: auto;
+      background-color: var(--bg-white);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      box-shadow: var(--shadow-md);
+      border: 1.5px solid var(--border-light);
+      border-top: none;
+      z-index: 10;
+    }
+    
+    .autocomplete-list.hidden {
+      display: none;
+    }
+    
+    .autocomplete-item {
+      padding: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border-bottom: 1px solid var(--border-light);
+    }
+    
+    .autocomplete-item:last-child {
+      border-bottom: none;
+    }
+    
+    .autocomplete-item:hover {
+      background-color: var(--primary-light);
+    }
+    
+    .buttons-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .btn {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .btn-back {
+      background-color: var(--bg-white);
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border-light);
+    }
+    
+    .btn-back:hover {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+    
+    .btn-next {
+      background-color: var(--text-light);
+      color: white;
+      border: none;
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    
+    .btn-next.active {
+      background-color: var(--primary);
+      opacity: 1;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .btn-next.active:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 2rem 1.5rem;
+      }
+      
+      .content-card {
+        padding: 2rem 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.75rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+      
+      .btn {
+        padding: 0.875rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ZOLA</div>
+  </header>
+  
+  <div class="progress-container">
+    <div class="progress-fill"></div>
+  </div>
+  
+  <div class="main-container">
+    <div class="content-card">
+      <h1>Select your business activity</h1>
+      <p class="subtitle">
+        Choose the business activity that you plan to carry out. This will help identify
+        the optimal location and license type for your company.
+      </p>
+      
+      <div class="search-container">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          class="search-input" 
+          id="businessInput" 
+          placeholder="Search or select a business activity" 
+        />
+        <ul class="autocomplete-list hidden" id="autocompleteList"></ul>
+      </div>
+      
+      <div class="buttons-row">
+        <button class="btn btn-back" id="previousBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+          </svg>
+          Back
+        </button>
+        
+        <button class="btn btn-next" id="nextBtn" disabled>
+          Continue
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const businessActivities = [
+      "Accounting","Advertising","Architecture","Auto Dealership","Beauty & Wellness","Business Consultancy",
+      "Catering","Cleaning Services","Construction & Contracting","Consulting","E-commerce","Education & Training",
+      "Event Management","Financial Services","Food & Beverage","Healthcare","Import & Export","Information Technology",
+      "Insurance Brokerage","Interior Design","Investment Management","Logistics","Manufacturing","Marketing",
+      "Media & Advertising","Real Estate","Recruitment","Software Development","Tourism & Hospitality","Trading",
+      "Transport Services","Venture Capital","Wholesale & Retail","Agricultural & Farming","Aerospace & Defense",
+      "Airlines & Aviation","App Development","Automotive Repair & Maintenance","Biotechnology","Bookkeeping",
+      "Broadcasting & Media Production","Call Center & BPO","Cloud Computing Services","Corporate Law & Legal Services",
+      "Cybersecurity & Data Protection","Digital Marketing Agency","Electrical & Electronics","Engineering Services",
+      "Environmental Services","Franchising","Furniture & Home Furnishings","Graphic Design & Multimedia",
+      "Green & Renewable Energy","HR Services & Payroll","Industrial Equipment & Machinery","Leisure & Entertainment",
+      "Market Research","Medical Devices & Equipment","Mining & Metals","Non-Profit & NGOs","Pharmaceuticals",
+      "Photography & Videography","Printing & Publishing","Public Relations (PR)","Social Media Management",
+      "Telecommunications"
+    ];
+
+    const inputEl = document.getElementById("businessInput");
+    const autocompleteListEl = document.getElementById("autocompleteList");
+    const previousBtn = document.getElementById("previousBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let selectedBusiness = "";
+
+    // Show/hide + filter the dropdown as the user types
+    inputEl.addEventListener("input", () => {
+      const query = inputEl.value.trim().toLowerCase();
+      if (!query) {
+        autocompleteListEl.classList.add("hidden");
+        nextBtn.classList.remove("active");
+        nextBtn.disabled = true;
+        return;
+      }
+
+      const matched = businessActivities.filter(item => 
+        item.toLowerCase().includes(query)
+      );
+
+      if (matched.length) {
+        autocompleteListEl.innerHTML = matched
+          .map(item => `<li class="autocomplete-item">${item}</li>`)
+          .join("");
+        autocompleteListEl.classList.remove("hidden");
+      } else {
+        autocompleteListEl.innerHTML = "";
+        autocompleteListEl.classList.add("hidden");
+      }
+
+      selectedBusiness = "";
+      nextBtn.classList.remove("active");
+      nextBtn.disabled = true;
+    });
+
+    // Handle clicks on the dropdown
+    autocompleteListEl.addEventListener("click", (e) => {
+      if (e.target && e.target.classList.contains("autocomplete-item")) {
+        selectedBusiness = e.target.textContent;
+        inputEl.value = selectedBusiness;
+        autocompleteListEl.classList.add("hidden");
+
+        // Enable Next
+        nextBtn.classList.add("active");
+        nextBtn.disabled = false;
+      }
+    });
+
+    // Hide list if clicking outside
+    document.addEventListener("click", (e) => {
+      if (!inputEl.contains(e.target) && !autocompleteListEl.contains(e.target)) {
+        autocompleteListEl.classList.add("hidden");
+      }
+    });
+
+    // If pressing Enter & exactly one match
+    inputEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const listItems = Array.from(autocompleteListEl.querySelectorAll(".autocomplete-item"));
+        if (listItems.length === 1) {
+          selectedBusiness = listItems[0].textContent;
+          inputEl.value = selectedBusiness;
+          autocompleteListEl.classList.add("hidden");
+          nextBtn.classList.add("active");
+          nextBtn.disabled = false;
+        }
+      }
+    });
+
+    // Previous -> go back to UI4
+    previousBtn.addEventListener('click', () => {
+      window.location.href = '/stage2/ui4';
+    });
+
+    // Next -> Save to server, then go to UI7
+    nextBtn.addEventListener('click', async () => {
+      if (!nextBtn.disabled && selectedBusiness) {
+        try {
+          await fetch('/stage2/save-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              question: 'businessActivity',
+              answer: selectedBusiness
+            })
+          });
+          window.location.href = '/stage2/ui7';
+        } catch (err) {
+          console.error('Error saving businessActivity:', err);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+

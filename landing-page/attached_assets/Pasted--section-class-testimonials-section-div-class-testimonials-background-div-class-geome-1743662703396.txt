@@ -1,0 +1,74 @@
+<section class="testimonials-section">
+  <div class="testimonials-background">
+    <div class="geometric-shape shape-1"></div>
+    <div class="geometric-shape shape-2"></div>
+    <div class="geometric-shape shape-3"></div>
+  </div>
+  
+  <div class="section-header">
+    <h2 class="section-subtitle">Client Testimonials</h2>
+    <h1 class="section-title">Success Stories from Industry Leaders</h1>
+    <p class="section-description">Hear what our satisfied clients have to say about their experience with Zola</p>
+  </div>
+  
+  <div class="testimonials-orbit">
+    <div class="orbit-container" id="orbitContainer">
+      <!-- Testimonial 1 -->
+      <div class="testimonial-card active" data-index="0">
+        <div class="quote-mark">"</div>
+        <div class="testimonial-glow"></div>
+        
+        <div class="rating">
+          <svg class="star" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+          </svg>
+          <!-- Repeat for 5 stars -->
+        </div>
+        
+        <div class="testimonial-content">
+          Zola transformed our expansion to Dubai from a complex challenge into a seamless process. Their expert guidance on free zone incorporation saved us time and resources.
+        </div>
+        
+        <div class="client-info">
+          <div class="client-avatar">
+            <img src="avatar-robert.jpg" alt="Robert Chen">
+          </div>
+          <div class="client-details">
+            <div class="client-name">Robert Chen</div>
+            <div class="client-position">CEO, Nexus Technologies</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Additional testimonial cards -->
+    </div>
+    
+    <div class="orbit-controls">
+      <button class="orbit-button prev">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <button class="orbit-button next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="orbit-dots">
+      <span class="orbit-dot active" data-index="0"></span>
+      <span class="orbit-dot" data-index="1"></span>
+      <span class="orbit-dot" data-index="2"></span>
+    </div>
+  </div>
+  
+  <div class="testimonials-cta">
+    <a href="#" class="cta-button">
+      Join Our Success Stories
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</section>

@@ -1,0 +1,116 @@
+Below is a highly detailed description of the illustrated graphic in your screenshot, optimized so that an AI system (such as a design generator or vector-graphics model) can replicate it accurately for your website’s hero section.
+
+Overall Style and Composition
+Style: Flat or semi-flat illustration with minimal shading and clean, solid-color shapes.
+
+Color Palette: Predominantly soft purples, with a slightly darker purple for the character’s clothing and hair, plus lighter shades of lavender or off-white in the background elements.
+
+Primary Character Illustration
+Pose & Position:
+
+A female character (front-facing) is positioned in front of a rectangular card or browser window shape.
+
+The character has her right hand raised in a friendly wave.
+
+Facial Features:
+
+Simplified facial features in a flat-illustration style (no intricate shading or texturing).
+
+Eyes are small, black or dark grey ovals, and the character has a small, closed mouth (slightly open as if speaking or smiling).
+
+Hair:
+
+Solid, dark purple or nearly black.
+
+Medium length, parted slightly off-center, no individual hair strands (just a single, smooth shape).
+
+Clothing:
+
+A long-sleeve top in a moderate or vivid purple hue (slightly lighter than the hair color but still in the purple family).
+
+No visible patterns or texture—just a flat-color shape.
+
+Background “Card” or “Browser Window” Element
+Shape:
+
+A large rectangle with soft or subtly rounded corners, sitting behind the character.
+
+The corners are not extremely rounded; they appear slightly curved (almost like a browser window or dashboard card).
+
+Color & Opacity:
+
+Primarily white or very light lavender, matching the hero section’s color scheme.
+
+The outline is faint, likely a very light gray or pastel purple stroke.
+
+Top Bar / Browser UI Suggestion:
+
+There is a thin bar at the top (as if representing a browser tab area) with circular or small shapes on the left, hinting at navigation buttons or tabs.
+
+The rest of the rectangle is the “content” area of this card.
+
+Internal Graphics:
+
+Pie Chart (left side): A simple circular chart in purple shades with a clean, flat design.
+
+Map of the UAE (right side): A stylized outline of the United Arab Emirates in a very light lavender shade.
+
+Positioned inside a smaller panel or a faded rectangle within the card.
+
+Features at least three location pins in a slightly darker purple than the map shape.
+
+Text Placeholders: Several horizontal lines beneath or beside each icon, representing placeholder text sections (e.g., 2–3 short lines under the pie chart, 2–3 short lines under or near the map).
+
+Color and Contrast
+Character:
+
+Skin tone is a soft beige or light brown, contrasting with the purple top.
+
+Hair is a dark, cool purple (almost black).
+
+Clothing is a medium-intensity purple—noticeably lighter than the hair, but not pastel.
+
+Background Elements:
+
+Light purples and whites dominate.
+
+The card behind the character is a subdued white-to-lavender tone to ensure the character in the foreground stands out.
+
+Accent Details:
+
+The chart, map pins, and other data icons use the same or slightly varying shades of purple for visual cohesion.
+
+Proportions and Sizing
+Character Size:
+
+The character is roughly half the height of the entire illustration area (from the top of the “card” to below her torso).
+
+Proportions are friendly and cartoonish, with a slightly larger head relative to the torso.
+
+Spacing:
+
+The character overlaps the card slightly, with her hand and upper torso in front of the card’s surface.
+
+The pie chart is on the left side of the card, while the UAE map is on the right, ensuring a balanced layout in the card’s background.
+
+Artistic/Stylistic Notes for an AI Generator
+Flat Illustration: Minimal shading or gradients—mostly solid colors and simple shadows if any.
+
+Rounded Corners: Both the background card and smaller accent shapes (e.g., bar charts or text lines) should have gentle, rounded corners for a friendly, modern look.
+
+Consistent Purple Hues: The design uses a unified purple palette for clothing, charts, and icons. Aim for 2–4 complementary purples across hair, clothing, highlights, etc.
+
+Character Expressions: Simple black or dark gray lines for eyes, eyebrows, and minimal detail on the nose, to keep it in line with a flat/modern cartoon style.
+
+Put It All Together
+In summary, the graphic features:
+
+A flat-style female character with a waving gesture, wearing a purple shirt.
+
+She’s placed in front of a faintly outlined rectangular “dashboard” or “browser window” that displays a pie chart and a stylized map of the UAE with location pins.
+
+The color palette is primarily purples and light lavenders, with minimal shading or gradients.
+
+The layout is clean and modern, with rounded corners and simple, flat vector shapes.
+
+By using these details—particularly the focus on flat design, rounded edges, the purple-centric palette, and clear separation of foreground character and background “dashboard”—an AI image or vector generator should be able to replicate (or closely approximate) the exact illustration style and content from your screenshot.

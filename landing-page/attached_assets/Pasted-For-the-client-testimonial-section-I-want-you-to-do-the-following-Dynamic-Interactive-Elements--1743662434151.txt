@@ -1,0 +1,131 @@
+For the "client testimonial" section, I want you to do the following:
+
+Dynamic Interactive Elements
+Hover & Selection Effects
+
+css:
+
+.testimonial-card {
+filter: brightness(0.85);
+transform: scale(0.85);
+}
+
+.testimonial-card.active {
+filter: brightness(1);
+transform: scale(1);
+box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12),
+0 0 0 1px rgba(196, 176, 135, 0.1),
+0 0 30px rgba(26, 35, 64, 0.12);
+z-index: 10;
+}
+
+.testimonial-card:hover {
+filter: brightness(0.95);
+transform: scale(0.88);
+}
+
+.testimonial-card.active:hover {
+transform: scale(1.02);
+}
+
+.rating {
+display: flex;
+margin-bottom: 16px;
+opacity: 0;
+transform: translateY(20px);
+transition: all 0.4s ease 0.2s;
+}
+
+.testimonial-card.active .rating {
+opacity: 1;
+transform: translateY(0);
+}
+
+.star {
+width: 20px;
+height: 20px;
+margin-right: 4px;
+color: #c4b087;
+transform-origin: center;
+}
+
+.testimonial-card.active .star {
+animation: starPulse 1.5s ease-out forwards;
+}
+
+@keyframes starPulse {
+0% { transform: scale(0); opacity: 0; }
+50% { transform: scale(1.2); opacity: 1; }
+100% { transform: scale(1); opacity: 1; }
+}
+
+Navigation Control:
+Css:
+
+.orbit-controls {
+position: absolute;
+bottom: 40px;
+left: 0;
+right: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 24px;
+z-index: 20;
+}
+
+.orbit-button {
+width: 56px;
+height: 56px;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.9);
+border: none;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+transition: all 0.3s ease;
+}
+
+.orbit-button:hover {
+transform: translateY(-4px);
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+background: white;
+}
+
+.orbit-button svg {
+width: 24px;
+height: 24px;
+stroke: #1a2340;
+stroke-width: 2px;
+transition: all 0.3s ease;
+}
+
+.orbit-button:hover svg {
+stroke: #c4b087;
+}
+
+.orbit-dots {
+display: flex;
+gap: 8px;
+position: absolute;
+bottom: 24px;
+left: 50%;
+transform: translateX(-50%);
+}
+
+.orbit-dot {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+background-color: rgba(26, 35, 64, 0.2);
+transition: all 0.3s ease;
+cursor: pointer;
+}
+
+.orbit-dot.active {
+width: 24px;
+border-radius: 12px;
+background-color: #1a2340;
+}

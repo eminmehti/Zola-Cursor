@@ -1,0 +1,259 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { useEffect, useRef } from 'react';
+import './contact.css';
+import { GradientButton } from "./ui/gradient-button";
+
+const contactSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  email: z.string().email({ message: "Invalid email address" }),
+  service: z.string().min(1, { message: "Please select a service" }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters" })
+});
+
+type ContactFormValues = z.infer<typeof contactSchema>;
+
+export default function ContactSection() {
+  const { toast } = useToast();
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  // Animation setup for elements with fade-up, fade-left, fade-right classes
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    const animatedElements = sectionRef.current?.querySelectorAll(
+      '.fade-up, .fade-left, .fade-right'
+    );
+    
+    animatedElements?.forEach(el => {
+      observer.observe(el);
+    });
+    
+    return () => {
+      animatedElements?.forEach(el => {
+        observer.unobserve(el);
+      });
+    };
+  }, []);
+  
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      service: "",
+      message: ""
+    }
+  });
+
+  const contactMutation = useMutation({
+    mutationFn: (data: ContactFormValues) => {
+      return apiRequest("POST", "/api/contact", data);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for contacting us. We'll get back to you shortly.",
+      });
+      form.reset();
+      
+      // Redirect to Stage-2 UI1.html after successful form submission
+      window.location.href = "/stage2/UI1.html";
+    },
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "Submission Failed",
+        description: error instanceof Error ? error.message : "Please try again later.",
+      });
+    }
+  });
+
+  function onSubmit(data: ContactFormValues) {
+    contactMutation.mutate(data);
+  }
+
+  const contactInfo = [
+    {
+      icon: "fas fa-map-marker-alt",
+      title: "Our Location",
+      details: "Business Bay, Dubai, United Arab Emirates"
+    },
+    {
+      icon: "fas fa-envelope",
+      title: "Email Us",
+      details: "info@zolaglobal.com"
+    }
+  ];
+
+  return (
+    <section id="contact" ref={sectionRef} className="contact-section">
+      {/* Premium background elements */}
+      <div className="contact-background">
+        <div className="contact-bg-circle circle-1"></div>
+        <div className="contact-bg-circle circle-2"></div>
+        <div className="accent-line"></div>
+      </div>
+      
+      <div className="contact-container">
+        <div className="contact-section-header fade-up">
+          <h4 className="contact-section-subtitle">Get In Touch</h4>
+          <h2 className="contact-section-title">Contact Us</h2>
+          <p className="contact-section-description">
+            Ready to elevate your business in the UAE? Contact us today to discuss your specific needs and how Zola can help you achieve your goals.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Contact Info Column */}
+          <div className="contact-info-column">
+            <div className="contact-info-container">
+              {contactInfo.map((info, index) => (
+                <div key={index} className={`contact-info-item fade-right delay-${index * 100}`} aria-label={info.title}>
+                  <div className="contact-info-icon">
+                    <i className={info.icon} aria-hidden="true"></i>
+                  </div>
+                  <h3 className="contact-info-title">{info.title}</h3>
+                  <p className="contact-info-details">{info.details}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Contact Form Column */}
+          <div className="contact-form-column">
+            <div className="contact-form-container fade-left">
+              <div className="form-decoration deco-1"></div>
+              <div className="form-decoration deco-2"></div>
+              
+              <Form {...form}>
+                <form 
+                  onSubmit={form.handleSubmit(onSubmit)} 
+                  className="contact-form"
+                  aria-label="Contact form"
+                >
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem className="form-field">
+                        <FormLabel className="form-label">Full Name</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="John Doe" 
+                            className="form-input" 
+                            {...field}
+                            aria-label="Full name" 
+                          />
+                        </FormControl>
+                        <FormMessage className="form-message" />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem className="form-field">
+                        <FormLabel className="form-label">Email Address</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="your@email.com" 
+                            type="email" 
+                            className="form-input" 
+                            {...field}
+                            aria-label="Email address" 
+                          />
+                        </FormControl>
+                        <FormMessage className="form-message" />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="service"
+                    render={({ field }) => (
+                      <FormItem className="form-field">
+                        <FormLabel className="form-label">Service of Interest</FormLabel>
+                        <Select 
+                          onValueChange={field.onChange} 
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="form-select" aria-label="Select a service">
+                              <SelectValue placeholder="Select a Service" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="incorporation">Business Incorporation</SelectItem>
+                            <SelectItem value="visa">Visa Solutions</SelectItem>
+                            <SelectItem value="banking">Banking Solutions</SelectItem>
+                            <SelectItem value="other">Other Services</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage className="form-message" />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem className="form-field">
+                        <FormLabel className="form-label">Your Message</FormLabel>
+                        <FormControl>
+                          <Textarea 
+                            placeholder="Tell us about your requirements..." 
+                            className="form-textarea" 
+                            rows={4}
+                            {...field}
+                            aria-label="Your message" 
+                          />
+                        </FormControl>
+                        <FormMessage className="form-message" />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <GradientButton 
+                    type="submit"
+                    className="w-full"
+                    disabled={contactMutation.isPending}
+                    ariaLabel={contactMutation.isPending ? "Sending message" : "Send message"}
+                    variant="primary"
+                    size="md"
+                  >
+                    {contactMutation.isPending ? (
+                      <>
+                        <i className="fas fa-spinner fa-spin spinner mr-2" aria-hidden="true"></i>
+                        Sending...
+                      </>
+                    ) : "Send Message"}
+                  </GradientButton>
+                </form>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zola Chatbot</title>
+  <!-- Import Google Fonts for a modern look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f7f9;
+      /* No flex styling on body, as we'll use fixed positioning for the chatbot */
+    }
+    
+    /* Chatbot Container */
+    #chatbot {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;           /* Full viewport height */
+      width: 25vw;             /* Approximately 1/4 of the viewport width */
+      max-width: 400px;        /* Optional maximum width */
+      background: #ffffff;
+      border-radius: 0;        /* Sharp edges */
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2); /* Appears like a separate screen */
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: width 0.3s ease;
+    }
+    
+    /* Collapsed state: when collapsed, the panel becomes a narrow bar */
+    #chatbot.collapsed {
+      width: 60px;
+    }
+    
+    /* Header Styling */
+    #chatbot-header {
+      background: linear-gradient(135deg, #0a192f, #112240);
+      color: #ffffff;
+      padding: 18px;
+      font-size: 18px;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    
+    /* Chat Messages Area */
+    #chatbot-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #fefefe;
+    }
+    
+    /* Input Area */
+    #chatbot-input {
+      display: flex;
+      border-top: 1px solid #e0e0e0;
+      background: #ffffff;
+      padding: 15px;
+    }
+    
+    #chatbot-input input {
+      flex: 1;
+      border: 1px solid #ddd;
+      border-radius: 0;       /* Sharp edges */
+      padding: 12px 18px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    
+    #chatbot-input input:focus {
+      border-color: #112240;
+    }
+    
+    #chatbot-input button {
+      background: #112240;
+      border: none;
+      border-radius: 0;       /* Sharp edges */
+      color: #fff;
+      padding: 12px 20px;
+      margin-left: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    #chatbot-input button:hover {
+      background: #0a192f;
+    }
+    
+    /* Message Styling */
+    .message {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    /* Align bot messages to the left and user messages to the right */
+    .message.bot {
+      justify-content: flex-start;
+    }
+    
+    .message.user {
+      justify-content: flex-end;
+    }
+    
+    .message-content {
+      max-width: 90%;
+      padding: 14px 18px;
+      border: 1px solid transparent;
+      border-radius: 0;       /* Sharp edges for the bubble */
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    
+    /* Bot Message Style */
+    .message.bot .message-content {
+      background: #e6efff;
+      color: #0a192f;
+    }
+    
+    /* User Message Style */
+    .message.user .message-content {
+      background: #112240;
+      color: #ffffff;
+    }
+    
+    /* Hide messages and input when chatbot is collapsed */
+    #chatbot.collapsed #chatbot-messages,
+    #chatbot.collapsed #chatbot-input {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Chatbot Window -->
+  <div id="chatbot">
+    <div id="chatbot-header">Zola AI Assistant</div>
+    <div id="chatbot-messages"></div>
+    <div id="chatbot-input">
+      <input type="text" id="user-input" placeholder="Type your message...">
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    // Get references to DOM elements
+    const chatbot = document.getElementById('chatbot');
+    const chatbotHeader = document.getElementById('chatbot-header');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    let isCollapsed = false;
+    const expandedWidth = "25vw";  // Default expanded width (as set in CSS)
+    const collapsedWidth = "60px"; // Collapsed width
+
+    // Toggle collapse/expand when clicking the header
+    chatbotHeader.addEventListener('click', () => {
+      isCollapsed = !isCollapsed;
+      if (isCollapsed) {
+        // Collapse: add 'collapsed' class so CSS rules apply
+        chatbot.classList.add("collapsed");
+        chatbotHeader.textContent = "Zola AI"; // Shorter text when collapsed
+      } else {
+        // Expand: remove 'collapsed' class
+        chatbot.classList.remove("collapsed");
+        chatbotHeader.textContent = "Zola AI Assistant";
+      }
+    });
+
+    // Function to send a message to the backend
+    function sendMessage() {
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      // Append user's message
+      appendMessage("You", message, "user");
+      userInput.value = '';
+
+      // Send the message to the backend
+      fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      })
+      .then(response => response.json())
+      .then(data => {
+        appendMessage("Zola AI Assistant", data.reply, "bot");
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        appendMessage("Zola AI Assistant", "Sorry, something went wrong.", "bot");
+      });
+    }
+
+    // Listen for the send button click and Enter key press
+    sendBtn.addEventListener('click', sendMessage);
+    userInput.addEventListener('keyup', (event) => {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    // Helper function to append messages to the chat window
+    function appendMessage(sender, message, type) {
+      const messageContainer = document.createElement('div');
+      // Use the class "bot" for AI messages, "user" for user messages
+      messageContainer.className = `message ${type}`;
+      const messageContent = document.createElement('div');
+      messageContent.className = 'message-content';
+      messageContent.textContent = sender + ": " + message;
+      messageContainer.appendChild(messageContent);
+      chatbotMessages.appendChild(messageContainer);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+  </script>
+</body>
+</html>
+
+
+
+

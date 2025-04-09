@@ -1,0 +1,102 @@
+[
+  {
+    "name": "Tech Startup with 3 Visas",
+    "userData": {
+      "companyName": "TechNova Solutions",
+      "industry": "Technology",
+      "businessActivities": [
+        "Software Development",
+        "IT Consulting",
+        "Digital Marketing"
+      ],
+      "primaryActivities": [
+        "Software Development"
+      ],
+      "visaCount": 3,
+      "budget": 25000,
+      "idealBudget": 20000,
+      "maxBudget": 30000,
+      "preferredLocation": "Dubai",
+      "needsPhysicalOffice": false,
+      "businessGoals": "establishing a tech startup focused on AI solutions",
+      "timeline": "Soon (1-2 weeks)"
+    },
+    "expectedFreezoneSuggestions": [
+      "Dubai Internet City",
+      "IFZA",
+      "DMCC"
+    ],
+    "accuracy": {
+      "costAccuracy": "Budget should be within 20,000-30,000 AED",
+      "visaAccuracy": "Must support 3 visas minimum",
+      "activityAccuracy": "Must support tech-related activities"
+    }
+  },
+  {
+    "name": "Trading Company with 5 Visas",
+    "userData": {
+      "companyName": "Global Trade Links",
+      "industry": "Trading",
+      "businessActivities": [
+        "General Trading",
+        "Import/Export",
+        "Commercial Brokerage"
+      ],
+      "primaryActivities": [
+        "General Trading",
+        "Import/Export"
+      ],
+      "visaCount": 5,
+      "budget": 35000,
+      "idealBudget": 30000,
+      "maxBudget": 40000,
+      "preferredLocation": "JAFZA",
+      "needsPhysicalOffice": true,
+      "businessGoals": "establishing an import/export business with MENA region",
+      "timeline": "Standard (2-4 weeks)"
+    },
+    "expectedFreezoneSuggestions": [
+      "JAFZA",
+      "RAKEZ",
+      "DAFZA"
+    ],
+    "accuracy": {
+      "costAccuracy": "Budget should be within 30,000-40,000 AED",
+      "visaAccuracy": "Must support 5 visas minimum",
+      "activityAccuracy": "Must support trading activities"
+    }
+  },
+  {
+    "name": "Consulting Firm with 2 Visas",
+    "userData": {
+      "companyName": "Insight Consulting Group",
+      "industry": "Consulting",
+      "businessActivities": [
+        "Business Consulting",
+        "Management Consulting",
+        "Financial Advisory"
+      ],
+      "primaryActivities": [
+        "Business Consulting"
+      ],
+      "visaCount": 2,
+      "budget": 20000,
+      "idealBudget": 18000,
+      "maxBudget": 25000,
+      "preferredLocation": "Any",
+      "needsPhysicalOffice": false,
+      "businessGoals": "starting a boutique consulting firm with focus on SMEs",
+      "timeline": "Flexible (1-3 months)"
+    },
+    "expectedFreezoneSuggestions": [
+      "Shams",
+      "IFZA",
+      "Meydan"
+    ],
+    "accuracy": {
+      "costAccuracy": "Budget should be within 18,000-25,000 AED",
+      "visaAccuracy": "Must support 2 visas minimum",
+      "activityAccuracy": "Must support consulting activities"
+    }
+  }
+]

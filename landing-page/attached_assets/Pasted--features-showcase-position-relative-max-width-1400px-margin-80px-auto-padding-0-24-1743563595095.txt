@@ -1,0 +1,152 @@
+.features-showcase {
+  position: relative;
+  max-width: 1400px;
+  margin: 80px auto;
+  padding: 0 24px;
+  overflow: hidden;
+}
+
+.features-track {
+  display: flex;
+  gap: 24px;
+  padding: 40px 0;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.feature-card {
+  flex: 0 0 calc(33.333% - 16px);
+  min-width: 320px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 40px 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  height: 240px;
+}
+
+.feature-card.active {
+  height: 400px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 24px;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  transform: translateY(-5px);
+}
+
+.feature-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1a2340;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.feature-description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #475569;
+  margin-bottom: 24px;
+  opacity: 0.8;
+}
+
+.feature-content {
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.feature-card.active .feature-content {
+  max-height: 200px;
+  opacity: 1;
+}
+
+.feature-tags {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.feature-tag {
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #f1f5f9;
+  color: #475569;
+  transition: all 0.3s ease;
+}
+
+.feature-tag:hover {
+  background-color: #e2e8f0;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.control-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+  background-color: #1a2340;
+  border-color: #1a2340;
+}
+
+.control-btn:hover svg {
+  stroke: white;
+}
+
+.control-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #1a2340;
+  stroke-width: 2px;
+  transition: all 0.3s ease;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  justify-content: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #e2e8f0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dot.active {
+  width: 24px;
+  border-radius: 12px;
+  background-color: #1a2340;
+}

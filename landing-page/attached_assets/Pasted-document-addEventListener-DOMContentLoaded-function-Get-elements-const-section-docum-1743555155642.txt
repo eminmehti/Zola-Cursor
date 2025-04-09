@@ -1,0 +1,86 @@
+document.addEventListener('DOMContentLoaded', function() {
+  // Get elements
+  const section = document.getElementById('industry-excellence-section');
+  const cards = document.querySelectorAll('.feature-card');
+  
+  // Exit if elements don't exist
+  if (!section || cards.length === 0) return;
+  
+  // Get section dimensions
+  const sectionTop = section.offsetTop;
+  const sectionHeight = section.offsetHeight;
+  const windowHeight = window.innerHeight;
+  
+  // Calculate total scrollable distance and distance per card
+  const scrollableDistance = sectionHeight - windowHeight;
+  const scrollPerCard = scrollableDistance / (cards.length - 1);
+  
+  // Set first card as active initially
+  cards[0].classList.add('active');
+  
+  // Main scroll handler function
+  function handleScroll() {
+    // Get scroll position relative to section
+    const scrollPosition = window.scrollY - sectionTop;
+    
+    // Only process when we're within the section
+    if (scrollPosition >= 0 && scrollPosition <= scrollableDistance) {
+      // Calculate which card should be active
+      const activeCardIndex = Math.min(
+        Math.floor(scrollPosition / scrollPerCard),
+        cards.length - 1
+      );
+      
+      // Calculate progress within current card transition (0-1)
+      const progress = (scrollPosition % scrollPerCard) / scrollPerCard;
+      
+      // Update all cards
+      cards.forEach((card, index) => {
+        // Remove active class from all cards
+        card.classList.remove('active');
+        
+        if (index === activeCardIndex) {
+          // Current card - fully visible but fading out
+          card.classList.add('active');
+          card.style.opacity = `${1 - progress}`;
+          card.style.transform = `translateY(${-30 * progress}px)`;
+        } 
+        else if (index === activeCardIndex + 1) {
+          // Next card coming in
+          card.style.opacity = `${progress}`;
+          card.style.transform = `translateY(${30 * (1 - progress)}px)`;
+          
+          // Make it active when progress is over 70%
+          if (progress > 0.7) {
+            card.classList.add('active');
+          }
+        } 
+        else {
+          // Other cards - hidden
+          card.style.opacity = '0';
+          card.style.transform = index < activeCardIndex ? 'translateY(-30px)' : 'translateY(30px)';
+        }
+      });
+    }
+  }
+  
+  // Performance optimized scroll listener
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        handleScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+  
+  // Initial calculation and handle resize
+  handleScroll();
+  window.addEventListener('resize', function() {
+    // Recalculate section dimensions on resize
+    const sectionTop = section.offsetTop;
+    handleScroll();
+  });
+});

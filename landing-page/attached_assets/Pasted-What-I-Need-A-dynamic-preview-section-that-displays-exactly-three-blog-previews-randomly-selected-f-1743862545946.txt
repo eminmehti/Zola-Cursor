@@ -1,0 +1,52 @@
+What I Need:
+A dynamic preview section that displays exactly three blog previews randomly selected from my full blog article library. This selection must update automatically once per week.
+
+Functional Requirements:
+
+Dynamic Blog Preview:
+
+Display three blogs at a time.
+
+Each blog preview should include:
+
+A thumbnail image or icon
+
+The blog title
+
+A short text excerpt
+
+Clicking a preview should redirect the user to the full blog post.
+
+Weekly Automated Rotation:
+
+Every 7 days, the three blogs displayed should be randomly reselected from the full library of blog articles.
+
+This selection process should not require manual intervention and should happen automatically.
+
+Blog Data Management:
+
+Blogs should be sourced dynamically from a JSON data file or a simple backend setup on Replit, making it easy to manage and update the blog library.
+
+CTA (Call-to-Action):
+
+Below the blog previews, include a clear and engaging call-to-action button or link (e.g., "Explore More Blogs") that redirects users to the main blog page displaying all articles.
+
+Technical Implementation Steps:
+
+Set up a JSON file or simple database that stores metadata for each blog post (title, thumbnail, excerpt, and URL).
+
+Build a frontend component (using HTML/CSS/JavaScript or React, depending on my project setup) that fetches blog data from this JSON file or backend.
+
+Write a JavaScript function or backend logic (Node.js) to randomly select three unique blog entries from the dataset.
+
+Implement a mechanism (e.g., local storage or server-side storage) to remember the selected blogs for exactly one week, updating automatically after this period.
+
+Ensure this feature is responsive, visually appealing, and consistent with the rest of the landing page styling.
+
+Additional Considerations:
+
+Keep performance optimized by ensuring the blog selection logic runs efficiently.
+
+Provide clear, maintainable, and commented code so future adjustments can easily be made.
+
+Please document your process clearly and include comments in your code for better maintainability.

@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Free Zone Proposals | ZOLA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #003366; /* Navy Blue */
+      --primary-hover: #004080;
+      --primary-light: #E5EBF2;
+      --secondary: #003366; /* Navy Blue */
+      --bg-white: #FFFFFF;
+      --bg-light: #F2F2F2; /* Soft Gray */
+      --text-dark: #003366; /* Navy Blue for headings */
+      --text-secondary: #333333; /* Dark gray for body text */
+      --text-light: #666666;
+      --border-light: #CCCCCC; /* Metallic silver */
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    h2, h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+    }
+
+    /* Header */
+    .header {
+      background-color: var(--bg-white);
+      padding: 1.5rem 2.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+    
+    .header .generate-btn {
+      background-color: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 0.875rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .header .generate-btn:hover {
+      background-color: var(--primary-light);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Container */
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 2.5rem auto;
+      gap: 2rem;
+      padding: 0 2.5rem;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    
+    .sidebar ul {
+      list-style: none;
+    }
+    
+    .sidebar li {
+      border-bottom: 1px solid var(--border-light);
+    }
+    
+    .sidebar li:last-child {
+      border-bottom: none;
+    }
+    
+    .sidebar li a {
+      display: block;
+      text-decoration: none;
+      color: var(--text-secondary);
+      padding: 1.25rem 1.75rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    .sidebar li a:hover {
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+    
+    .sidebar li a.active {
+      background-color: var(--primary);
+      color: var(--bg-white);
+      font-weight: 600;
+      position: relative;
+    }
+    
+    .sidebar li a.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--bg-white);
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem;
+      background: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+    
+    .spinner {
+      border: 4px solid var(--primary-light);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 2rem;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Error */
+    .error-message {
+      padding: 4rem 3rem;
+      background: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      color: #e74c3c;
+      text-align: center;
+      display: none;
+    }
+    
+    .error-message h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: #e74c3c;
+    }
+
+    /* Intro text */
+    .intro-text {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 2rem 2.5rem;
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    /* Proposal card */
+    .proposal-card {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 2.5rem;
+      display: none;
+    }
+    
+    .proposal-card h2 {
+      margin-bottom: 1.75rem;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* Card actions */
+    .card-actions {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .card-actions button {
+      background-color: var(--bg-light);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 0.875rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .card-actions button:hover {
+      background-color: var(--primary-light);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+      border-color: var(--primary);
+    }
+
+    .card-actions button svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Feature list */
+    .feature-list {
+      list-style-position: outside;
+      padding-left: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .feature-list li {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      padding-left: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0 2rem;
+    }
+    
+    table tr {
+      border-bottom: 1px solid var(--border-light);
+    }
+    
+    table tr:last-child {
+      border-bottom: none;
+    }
+    
+    table td {
+      padding: 1rem 0;
+      font-size: 1rem;
+      vertical-align: top;
+    }
+    
+    table td:first-child {
+      width: 240px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    table td:last-child {
+      color: var(--text-secondary);
+    }
+
+    /* Why Recommended */
+    .why-recommended {
+      background-color: var(--primary-light);
+      padding: 2rem 2.5rem;
+      margin: 2rem 0;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--primary);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    /* Setup Process */
+    .setup-process {
+      margin-top: 2.5rem;
+    }
+    
+    .setup-process h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .setup-step {
+      margin-bottom: 1rem;
+      padding: 1.25rem 1.75rem;
+      background-color: var(--bg-light);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      position: relative;
+      padding-left: 3.5rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+    
+    .setup-step:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .setup-step:last-child {
+      margin-bottom: 0;
+    }
+    
+    .setup-step:before {
+      content: attr(data-step);
+      position: absolute;
+      left: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Total + Select button */
+    .total-and-select {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1.15rem;
+    }
+    
+    .total-and-select .total-cost {
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    
+    .select-btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .select-btn:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .select-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Section dividers */
+    .section-divider {
+      height: 1px;
+      background-color: var(--border-light);
+      margin: 2.5rem 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        padding: 0 1.5rem;
+      }
+      
+      .sidebar {
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+      
+      table td:first-child {
+        width: 180px;
+      }
+      
+      .proposal-card {
+        padding: 1.75rem;
+      }
+      
+      .why-recommended {
+        padding: 1.5rem 1.75rem;
+      }
+      
+      .header {
+        padding: 1.25rem 1.5rem;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .card-actions {
+        flex-direction: column;
+      }
+      
+      .card-actions button {
+        width: 100%;
+      }
+      
+      .total-and-select {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      .select-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">ZOLA</div>
+    <button class="generate-btn" onclick="window.location.href='/'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: -3px;">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+      New proposal
+    </button>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <ul id="sidebar-options">
+        <!-- Will be populated with proposal options -->
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Loading State -->
+      <div id="loading-state" class="loading">
+        <div class="spinner"></div>
+        <p>Generating your personalized free zone proposals...</p>
+      </div>
+
+      <!-- Error State -->
+      <div id="error-state" class="error-message">
+        <h3>Oops! Something went wrong</h3>
+        <p>We encountered an error while generating your proposals. Please try again later or contact our support team.</p>
+      </div>
+
+      <!-- Proposal Content (initially hidden) -->
+      <div id="proposal-content" style="display: none;">
+        <!-- Intro Text -->
+        <div class="intro-text">
+          Dear <span id="client-name">Client</span>, based on your requirements, we are pleased to present our customized proposals for your business setup in the UAE.
+        </div>
+
+        <!-- Proposal Card -->
+        <div id="proposal-card" class="proposal-card">
+          <h2 id="freezone-name">UAE Free Zone Option</h2>
+
+          <!-- Card action buttons -->
+          <div class="card-actions">
+            <button onclick="printProposal()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+              Print
+            </button>
+            <button onclick="downloadProposal()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download
+            </button>
+          </div>
+
+          <!-- Why Recommended -->
+          <div class="why-recommended">
+            <p id="why-recommended"></p>
+          </div>
+
+          <!-- Bullet list of benefits -->
+          <h3>Key Benefits</h3>
+          <ul id="benefits-list" class="feature-list">
+            <!-- Will be populated dynamically -->
+          </ul>
+
+          <div class="section-divider"></div>
+
+          <!-- Table of features -->
+          <h3>Features & Attributes</h3>
+          <table id="features-table">
+            <!-- Will be populated dynamically -->
+          </table>
+
+          <div class="section-divider"></div>
+
+          <!-- Cost Breakdown -->
+          <h3>Cost Breakdown</h3>
+          <table id="cost-table">
+            <!-- Will be populated dynamically -->
+          </table>
+
+          <div class="section-divider"></div>
+
+          <!-- Setup Process -->
+          <div class="setup-process">
+            <h3>Setup Process</h3>
+            <div id="setup-process">
+              <!-- Will be populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Bottom row: total and select button -->
+          <div class="total-and-select">
+            <div class="total-cost">Total: <span id="total-cost">0</span> AED</div>
+            <button class="select-btn" onclick="selectProposal()">
+              Select this proposal
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14"></path>
+                <path d="M12 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global variables to store all proposals and userData
+    let allProposals = [];
+    let userData = {};
+    let currentProposalIndex = 0;
+    
+    // Function to get URL parameters
+    function getUrlParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Function to format currency
+    function formatCurrency(amount) {
+      return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Function to show error state
+    function showError() {
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('error-state').style.display = 'block';
+      document.getElementById('proposal-content').style.display = 'none';
+    }
+
+    // Function to populate sidebar with proposal options
+    function populateSidebar(proposals) {
+      const sidebarOptions = document.getElementById('sidebar-options');
+      sidebarOptions.innerHTML = '';
+      
+      proposals.forEach((proposal, index) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = '#';
+        
+        // Use the actual freezone name instead of generic "Option X"
+        // And add "(Recommended)" to the first option
+        if (index === 0) {
+          a.textContent = `${proposal.recommendedFreeZone} (Recommended)`;
+          a.className = 'active';
+        } else {
+          a.textContent = proposal.recommendedFreeZone;
+        }
+        
+        a.dataset.index = index;
+        
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Remove active class from all links
+          document.querySelectorAll('#sidebar-options a').forEach(link => {
+            link.className = '';
+          });
+          
+          // Add active class to clicked link
+          this.className = 'active';
+          
+          // Show the selected proposal
+          currentProposalIndex = index;
+          showProposal(allProposals[index]);
+        });
+        
+        li.appendChild(a);
+        sidebarOptions.appendChild(li);
+      });
+    }
+
+    // Function to show proposal
+    function showProposal(proposal) {
+      // Hide loading, show content
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('proposal-content').style.display = 'block';
+      document.getElementById('proposal-card').style.display = 'block';
+      
+      // Set client name
+      document.getElementById('client-name').textContent = userData.fullName || 'Client';
+      
+      // Set freezone name - add (Recommended) to the title if it's the first proposal
+      if (currentProposalIndex === 0) {
+        document.getElementById('freezone-name').textContent = `${proposal.recommendedFreeZone} (Recommended)`;
+      } else {
+        document.getElementById('freezone-name').textContent = proposal.recommendedFreeZone;
+      }
+      
+      // Set why recommended
+      document.getElementById('why-recommended').textContent = proposal.whyRecommended;
+      
+      // Populate benefits list
+      const benefitsList = document.getElementById('benefits-list');
+      benefitsList.innerHTML = '';
+      proposal.keyBenefits.forEach(benefit => {
+        const li = document.createElement('li');
+        li.textContent = benefit;
+        benefitsList.appendChild(li);
+      });
+      
+      // Populate features table
+      const featuresTable = document.getElementById('features-table');
+      featuresTable.innerHTML = '';
+      
+      for (const [key, value] of Object.entries(proposal.featuresAndAttributes)) {
+        const row = document.createElement('tr');
+        
+        const keyCell = document.createElement('td');
+        // Format the key from camelCase to Title Case
+        const formattedKey = key
+          .replace(/([A-Z])/g, ' $1')
+          .replace(/^./, str => str.toUpperCase());
+        keyCell.textContent = formattedKey;
+        
+        const valueCell = document.createElement('td');
+        valueCell.textContent = value;
+        
+        row.appendChild(keyCell);
+        row.appendChild(valueCell);
+        featuresTable.appendChild(row);
+      }
+      
+      // Populate cost table
+      const costTable = document.getElementById('cost-table');
+      costTable.innerHTML = '';
+      
+      for (const [key, value] of Object.entries(proposal.costBreakdown)) {
+        if (key !== 'total') {
+          const row = document.createElement('tr');
+          
+          const keyCell = document.createElement('td');
+          // Format the key from camelCase to Title Case
+          const formattedKey = key
+            .replace(/([A-Z])/g, ' $1')
+            .replace(/^./, str => str.toUpperCase());
+          keyCell.textContent = formattedKey;
+          
+          const valueCell = document.createElement('td');
+          valueCell.textContent = `${formatCurrency(value)} AED`;
+          
+          row.appendChild(keyCell);
+          row.appendChild(valueCell);
+          costTable.appendChild(row);
+        }
+      }
+      
+      // Set total cost
+      document.getElementById('total-cost').textContent = formatCurrency(proposal.costBreakdown.total);
+      
+      // Populate setup process
+      const setupProcess = document.getElementById('setup-process');
+      setupProcess.innerHTML = '';
+      
+      proposal.setupProcess.forEach((step, index) => {
+        const stepElement = document.createElement('div');
+        stepElement.className = 'setup-step';
+        stepElement.setAttribute('data-step', `${index + 1}.`);
+        stepElement.textContent = step;
+        setupProcess.appendChild(stepElement);
+      });
+    }
+
+    // Function to print proposal
+    function printProposal() {
+      window.print();
+    }
+
+    // Function to download proposal as PDF (simplified)
+    function downloadProposal() {
+      alert('Download functionality will be implemented with a PDF library. For now, please use the Print function and save as PDF.');
+    }
+
+    // Function to select proposal - UPDATED to use correct URL format
+    function selectProposal() {
+      const selectedProposal = allProposals[currentProposalIndex];
+      
+      // Store the selected proposal in localStorage
+      localStorage.setItem('selectedProposal', JSON.stringify(selectedProposal));
+      localStorage.setItem('userData', JSON.stringify(userData));
+      
+      // Redirect to the payment page - FIXED URL
+      window.location.href = '/stage2/ui11';
+    }
+
+    // Main function to fetch and display the proposals
+    async function fetchProposals() {
+      const sessionId = getUrlParam('sessionId');
+      
+      if (!sessionId) {
+        showError();
+        return;
+      }
+      
+      try {
+        // Fetch proposals from API
+        const response = await fetch('/stage2/generate-proposal', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ sessionId })
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch proposals');
+        }
+        
+        const data = await response.json();
+        
+        if (data.status === 'success' && data.proposals && data.proposals.length > 0) {
+          // Store all proposals and user data globally
+          allProposals = data.proposals;
+          userData = data.userData;
+          
+          // Populate the sidebar with proposal options
+          populateSidebar(allProposals);
+          
+          // Show the first proposal by default
+          showProposal(allProposals[0]);
+        } else {
+          showError();
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showError();
+      }
+    }
+
+    // When the page loads, fetch the proposals
+    window.addEventListener('DOMContentLoaded', fetchProposals);
+  </script>
+</body>
+</html>

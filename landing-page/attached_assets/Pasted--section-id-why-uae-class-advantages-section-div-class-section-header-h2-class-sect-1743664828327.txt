@@ -1,0 +1,71 @@
+<section id="why-uae" class="advantages-section">
+  <div class="section-header">
+    <h2 class="section-title">Why Choose UAE</h2>
+    <p class="section-subtitle">Discover the strategic advantages that make the UAE an ideal destination for your business</p>
+  </div>
+  
+  <div class="metro-grid">
+    <!-- Primary Advantage (Large Tile) -->
+    <div class="metro-tile large" data-aos="fade-up">
+      <div class="tile-icon">
+        <svg class="advantage-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#c4b087" stroke-width="1.5">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+      </div>
+      <h3 class="tile-title">Tax Advantages</h3>
+      <p class="tile-description">Benefit from 0% corporate tax in Free Zones, no personal income tax, and extensive double taxation treaties.</p>
+      <div class="tile-highlights">
+        <span class="highlight-tag">0% Corporate Tax</span>
+        <span class="highlight-tag">No Personal Income Tax</span>
+      </div>
+    </div>
+    
+    <!-- Secondary Advantage (Medium Tile) -->
+    <div class="metro-tile medium" data-aos="fade-up" data-aos-delay="100">
+      <div class="tile-icon">
+        <svg class="advantage-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#c4b087" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+        </svg>
+      </div>
+      <h3 class="tile-title">Strategic Location</h3>
+      <p class="tile-description">Access to global markets with Dubai serving as the gateway between East and West.</p>
+    </div>
+    
+    <!-- Secondary Advantage (Medium Tile) -->
+    <div class="metro-tile medium" data-aos="fade-up" data-aos-delay="200">
+      <div class="tile-icon">
+        <svg class="advantage-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#c4b087" stroke-width="1.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <h3 class="tile-title">Political Stability</h3>
+      <p class="tile-description">Enjoy a secure business environment backed by strong leadership and clear developmental vision.</p>
+    </div>
+    
+    <!-- Tertiary Advantage (Small Tile) -->
+    <div class="metro-tile small" data-aos="fade-up" data-aos-delay="300">
+      <div class="tile-icon">
+        <svg class="advantage-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#c4b087" stroke-width="1.5">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+      </div>
+      <h3 class="tile-title">Economic Diversification</h3>
+    </div>
+    
+    <!-- Additional Advantage (Small Tile) -->
+    <div class="metro-tile small" data-aos="fade-up" data-aos-delay="350">
+      <div class="tile-icon">
+        <svg class="advantage-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#c4b087" stroke-width="1.5">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+          <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+        </svg>
+      </div>
+      <h3 class="tile-title">Modern Infrastructure</h3>
+    </div>
+  </div>
+  
+  <div class="cta-container">
+    <a href="#" class="cta-button">Plan Your UAE Business Entry</a>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+document.addEventListener('DOMContentLoaded', () => {
+  // Handle view toggling
+  const viewOptions = document.querySelectorAll('.view-option');
+  const tableView = document.querySelector('.comparison-container');
+  const graphView = document.querySelector('.graph-view');
+  
+  viewOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      // Remove active class from all options
+      viewOptions.forEach(opt => opt.classList.remove('active'));
+      
+      // Add active class to clicked option
+      option.classList.add('active');
+      
+      const viewType = option.dataset.view;
+      
+      if (viewType === 'table') {
+        tableView.classList.remove('hidden');
+        graphView.classList.remove('active');
+      } else if (viewType === 'graph') {
+        tableView.classList.add('hidden');
+        graphView.classList.add('active');
+        
+        // Initialize chart animation if needed
+        initializeCharts();
+      }
+    });
+  });
+  
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+        
+        // Animate metric bars if they exist
+        const metricBars = entry.target.querySelectorAll('.metric-bar');
+        metricBars.forEach(bar => {
+          setTimeout(() => {
+            const percentage = bar.dataset.percentage;
+            bar.style.transform = `scaleX(${percentage / 100})`;
+          }, 300);
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+  
+  // Observe the comparison container
+  observer.observe(document.querySelector('.comparison-section'));
+  
+  // Optional: Add hover effect on rows
+  const rows = document.querySelectorAll('.comparison-row');
+  rows.forEach(row => {
+    row.addEventListener('mouseenter', () => {
+      rows.forEach(r => r.classList.remove('highlighted'));
+      row.classList.add('highlighted');
+    });
+  });
+  
+  // Function to initialize charts in graph view
+  function initializeCharts() {
+    // If using a charting library like Chart.js
+    // Code for initializing charts would go here
+  }
+});

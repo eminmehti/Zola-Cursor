@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment | ZOLA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Add PDF generation libraries properly -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --primary: #003366; /* Navy Blue */
+      --primary-hover: #004080;
+      --primary-light: #E5EBF2;
+      --secondary: #003366; /* Navy Blue */
+      --bg-white: #FFFFFF;
+      --bg-light: #F2F2F2; /* Soft Gray */
+      --text-dark: #003366; /* Navy Blue for headings */
+      --text-secondary: #333333; /* Dark gray for body text */
+      --text-light: #666666;
+      --border-light: #CCCCCC; /* Metallic silver */
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.3s ease;
+      --success: #28a745;
+      --danger: #dc3545;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: 16px;
+      min-height: 100vh;
+    }
+
+    h2, h3, h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+    }
+
+    h4 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+    }
+
+    /* Header */
+    .header {
+      background-color: var(--bg-white);
+      padding: 1.5rem 2.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 4px;
+      background-color: var(--border-light);
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+      width: 90%; /* Last step in the flow */
+      transition: var(--transition);
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      padding: 1rem 2.5rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      background-color: var(--bg-white);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .breadcrumb a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .breadcrumb .separator {
+      margin: 0 0.5rem;
+      color: var(--text-light);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2.5rem;
+    }
+
+    /* Two-column layout for payment */
+    .payment-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 2rem;
+    }
+
+    /* Card styling */
+    .card {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Proposal summary styles */
+    .proposal-summary .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .proposal-summary h3 {
+      margin-bottom: 0;
+    }
+
+    .download-pdf-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--primary-light);
+      color: var(--primary);
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .download-pdf-button:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .download-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .proposal-section {
+      border-top: 1px solid var(--border-light);
+      padding: 1.5rem 0;
+    }
+
+    .proposal-section-title {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .proposal-section-content {
+      margin-top: 1rem;
+    }
+
+    .proposal-section-content ul {
+      padding-left: 1.5rem;
+    }
+
+    .proposal-section-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .chevron {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .chevron.up {
+      transform: rotate(180deg);
+    }
+
+    /* Payment methods styling */
+    .payment-methods {
+      margin-bottom: 1.5rem;
+    }
+
+    .payment-method {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .payment-method-header {
+      display: flex;
+      align-items: center;
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .payment-method-header:hover {
+      background-color: var(--bg-light);
+    }
+
+    .radio-button {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border-light);
+      margin-right: 1rem;
+      position: relative;
+    }
+
+    .radio-button.selected {
+      border-color: var(--primary);
+    }
+
+    .radio-button.selected::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .payment-method-label {
+      font-weight: 500;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .payment-icon {
+      height: 24px;
+    }
+
+    .payment-method-content {
+      padding: 0 1.25rem 1.25rem;
+      display: none;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .payment-method-content.active {
+      display: block;
+    }
+
+    /* Bank details styling */
+    .bank-details {
+      background-color: var(--bg-light);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .bank-details table {
+      width: 100%;
+    }
+
+    .bank-details td {
+      padding: 0.5rem 0;
+      vertical-align: top;
+    }
+
+    .bank-details td:first-child {
+      font-weight: 600;
+      width: 120px;
+    }
+
+    /* Form styling */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .mt-3 {
+      margin-top: 1.5rem;
+    }
+
+    /* Cost summary styling */
+    .cost-summary {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .cost-breakdown-header {
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .cost-breakdown-title {
+      font-weight: 600;
+    }
+
+    .cost-breakdown-content {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .cost-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .cost-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .total-row {
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--text-dark);
+    }
+
+    /* Button styling */
+    .payment-button {
+      display: block;
+      width: 100%;
+      padding: 1.25rem;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .payment-button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .payment-button .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      position: absolute;
+      left: calc(50% - 40px);
+      top: 50%;
+      transform: translate(-50%, -50%);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Stripe Element styling */
+    .stripe-element-container {
+      padding: 0.875rem 1rem;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background-color: white;
+    }
+
+    #payment-message {
+      color: var(--danger);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      min-height: 20px;
+    }
+
+    /* PDF Overlay */
+    .pdf-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .pdf-overlay-content {
+      background-color: white;
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .pdf-overlay-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(0, 51, 102, 0.2);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      animation: spin 1s linear infinite;
+    }
+
+    /* Responsive styling */
+    @media (max-width: 900px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+
+      .payment-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        padding: 1.25rem 1.5rem;
+      }
+
+      .breadcrumb {
+        padding: 1rem 1.5rem;
+      }
+
+      .card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">ZOLA</div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-container">
+    <div class="progress-bar"></div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    <span class="separator">/</span>
+    <a href="javascript:history.back()">Proposals</a>
+    <span class="separator">/</span>
+    <span>Payment</span>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <h2>Complete Your Payment</h2>
+    
+    <div class="payment-wrapper">
+      <!-- Left Column: Proposal Details -->
+      <div class="proposal-details">
+        <div class="card proposal-summary">
+          <div class="title">
+            <h3 id="proposal-title">Your Selected Proposal</h3>
+            <button id="download-pdf-button" class="download-pdf-button">
+              <svg class="download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="currentColor"/>
+              </svg>
+              Download PDF
+            </button>
+          </div>
+          
+          <!-- Business profile section -->
+          <div class="proposal-section">
+            <div class="proposal-section-title" data-section="business-profile">
+              Business Profile
+              <svg class="chevron up" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="proposal-section-content" id="business-profile-content">
+              <ul>
+                <li id="business-type">Loading business type...</li>
+                <li id="freezone-type">Loading freezone type...</li>
+                <li id="location">Loading location...</li>
+                <li id="visa-count">Loading visa details...</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Business activity section -->
+          <div class="proposal-section">
+            <div class="proposal-section-title" data-section="business-activity">
+              Business Activity
+              <svg class="chevron up" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="proposal-section-content" id="business-activity-content">
+              <ul id="activity-list">
+                <li>Loading business activities...</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Setup process section -->
+          <div class="proposal-section">
+            <div class="proposal-section-title" data-section="setup-process">
+              Setup Process
+              <svg class="chevron up" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="proposal-section-content" id="setup-process-content">
+              <ul id="setup-process-list">
+                <li>Loading setup process...</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Our services section -->
+          <div class="proposal-section">
+            <div class="proposal-section-title" data-section="services">
+              Our Services
+              <svg class="chevron up" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="proposal-section-content" id="services-content">
+              <ul id="services-list">
+                <li>Complete business setup assistance</li>
+                <li>Document preparation and submission</li>
+                <li>License application processing</li>
+                <li>Visa processing assistance</li>
+                <li>Dedicated account manager</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Payment Options -->
+      <div class="payment-options">
+        <!-- Payment methods -->
+        <div id="payment-form" class="card">
+          <h3>Payment Method</h3>
+          <div class="payment-methods">
+            <!-- Card payment method -->
+            <div class="payment-method">
+              <div class="payment-method-header" data-method="card">
+                <div class="radio-button selected"></div>
+                <div class="payment-method-label">
+                  Card Payment
+                  <img src="https://js.stripe.com/v3/fingerprinted/img/payment-methods/card_4x.svg" class="payment-icon" alt="Card">
+                </div>
+              </div>
+              <div class="payment-method-content active" id="card-content">
+                <!-- Card form -->
+                <div class="form-group">
+                  <label for="cardholder-name" class="form-label">Cardholder Name</label>
+                  <input type="text" id="cardholder-name" class="form-control" placeholder="Name on card" required>
+                </div>
+                <div class="form-group">
+                  <label for="cardholder-email" class="form-label">Email</label>
+                  <input type="email" id="cardholder-email" class="form-control" placeholder="Email address for receipt" required>
+                </div>
+                <div class="form-group">
+                  <label for="payment-element" class="form-label">Card Details</label>
+                  <div id="payment-element" class="stripe-element-container">
+                    <!-- Stripe Elements will be inserted here -->
+                  </div>
+                  <div id="payment-message"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wire transfer payment method -->
+            <div class="payment-method">
+              <div class="payment-method-header" data-method="wire-transfer">
+                <div class="radio-button"></div>
+                <div class="payment-method-label">Wire Transfer</div>
+              </div>
+              <div class="payment-method-content" id="wire-transfer-content">
+                <div class="bank-details">
+                  <table>
+                    <tr>
+                      <td>Bank Name</td>
+                      <td>Emirates NBD, Baniyas Road DEIRA, Box #777, Dubai, UAE</td>
+                    </tr>
+                    <tr>
+                      <td>Account Title</td>
+                      <td>Zola CS DMCC</td>
+                    </tr>
+                    <tr>
+                      <td>SWIFT Code</td>
+                      <td>EBILAEAD</td>
+                    </tr>
+                    <tr>
+                      <td>Account</td>
+                      <td>10145236587</td>
+                    </tr>
+                    <tr>
+                      <td>IBAN</td>
+                      <td>AE896210057493325164211</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="form-group mt-3">
+                  <label for="wire-transfer-name" class="form-label">Full Name</label>
+                  <input type="text" id="wire-transfer-name" class="form-control" placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                  <label for="wire-transfer-email" class="form-label">Email</label>
+                  <input type="email" id="wire-transfer-email" class="form-control" placeholder="Your email address">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cost summary -->
+        <div class="cost-summary">
+          <div class="cost-breakdown-header" data-section="cost-breakdown">
+            <div class="cost-breakdown-title">Cost Breakdown</div>
+            <svg class="chevron" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="cost-breakdown-content" id="cost-breakdown-content" style="display: none;">
+            <div class="cost-item">
+              <div class="cost-label">License Setup Fee</div>
+              <div class="cost-amount" id="license-fee">15,000 AED</div>
+            </div>
+            <div class="cost-item">
+              <div class="cost-label">Visa Processing (x<span id="visa-quantity">3</span>)</div>
+              <div class="cost-amount" id="visa-fee">10,500 AED</div>
+            </div>
+            <div class="cost-item">
+              <div class="cost-label">Office Space</div>
+              <div class="cost-amount" id="office-fee">25,000 AED</div>
+            </div>
+            <div class="cost-item">
+              <div class="cost-label">Service Fees</div>
+              <div class="cost-amount" id="service-fee">19,500 AED</div>
+            </div>
+          </div>
+
+          <div class="total-row">
+            <div class="total-label">Total</div>
+            <div class="total-amount" id="total-amount">70,000 AED</div>
+          </div>
+
+          <button id="submit-button" type="button" class="payment-button">
+            <span class="spinner"></span>
+            <span class="button-text">Pay Now</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- PDF Generation Loading Overlay -->
+  <div id="pdf-overlay" class="pdf-overlay">
+    <div class="pdf-overlay-content">
+      <div class="pdf-overlay-spinner"></div>
+      <p>Generating your PDF...</p>
+    </div>
+  </div>
+
+  <!-- Payment Gateway Scripts -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    // UI11 main functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded - initializing payment page');
+      
+      // Track card input validity
+      let isCardValid = false;
+      
+      // Get the selected proposal from local storage
+      const selectedProposal = JSON.parse(localStorage.getItem('selectedProposal')) || {};
+      const userData = JSON.parse(localStorage.getItem('userData')) || {};
+      
+      // Populate proposal details based on the selected proposal
+      populateProposalDetails(selectedProposal, userData);
+      
+      // Populate user email if available
+      const emailInput = document.getElementById('cardholder-email');
+      const wireEmailInput = document.getElementById('wire-transfer-email');
+      if (emailInput && userData.email) emailInput.value = userData.email;
+      if (wireEmailInput && userData.email) wireEmailInput.value = userData.email;
+      
+      // Populate user name if available
+      const nameInput = document.getElementById('cardholder-name');
+      const wireNameInput = document.getElementById('wire-transfer-name');
+      if (nameInput && userData.fullName) nameInput.value = userData.fullName;
+      if (wireNameInput && userData.fullName) wireNameInput.value = userData.fullName;
+      
+      // Handle section toggling
+      document.querySelectorAll('.proposal-section-title').forEach(header => {
+        header.addEventListener('click', function() {
+          const section = this.getAttribute('data-section');
+          const content = this.parentElement.querySelector('.proposal-section-content');
+          const chevron = this.querySelector('.chevron');
+          
+          if (content.style.display === 'none') {
+            content.style.display = 'block';
+            chevron.classList.add('up');
+          } else {
+            content.style.display = 'none';
+            chevron.classList.remove('up');
+          }
+        });
+      });
+      
+      // Handle payment method selection
+      document.querySelectorAll('.payment-method-header').forEach(header => {
+        header.addEventListener('click', function() {
+          const method = this.getAttribute('data-method');
+          console.log('Payment method selected:', method);
+          
+          // Update radio buttons
+          document.querySelectorAll('.radio-button').forEach(radio => {
+            radio.classList.remove('selected');
+          });
+          this.querySelector('.radio-button').classList.add('selected');
+          
+          // Show/hide content
+          document.querySelectorAll('.payment-method-content').forEach(content => {
+            content.classList.remove('active');
+            content.style.display = 'none';
+          });
+          
+          const content = document.getElementById(`${method}-content`);
+          content.classList.add('active');
+          content.style.display = 'block';
+          
+          // Update button text based on payment method
+          const buttonText = document.querySelector('#submit-button .button-text');
+          if (buttonText) {
+            if (method === 'card') {
+              buttonText.textContent = 'Pay Now';
+            } else if (method === 'wire-transfer') {
+              buttonText.textContent = 'Request Wire Transfer Details';
+            }
+          }
+        });
+      });
+      
+      // Handle cost breakdown toggle
+      document.querySelector('[data-section="cost-breakdown"]').addEventListener('click', function() {
+        const content = document.getElementById('cost-breakdown-content');
+        const chevron = this.querySelector('.chevron');
+        
+        if (content.style.display === 'none') {
+          content.style.display = 'block';
+          chevron.classList.add('up');
+        } else {
+          content.style.display = 'none';
+          chevron.classList.remove('up');
+        }
+      });
+      
+      // Initialize Stripe Elements
+      initializeStripe();
+      
+      // Wire transfer submit handler
+      document.getElementById('submit-button').addEventListener('click', function() {
+        const selectedMethod = document.querySelector('.radio-button.selected')
+                              ?.closest('.payment-method-header')
+                              ?.getAttribute('data-method');
+         
+        if (selectedMethod === 'wire-transfer') {
+          handleWireTransferSubmit();
+        } else if (selectedMethod === 'card') {
+          handleCardPayment();
+        }
+      });
+      
+      // PDF download button handler
+      document.getElementById('download-pdf-button').addEventListener('click', generatePDF);
+      
+      // Initialize Stripe
+      function initializeStripe() {
+        try {
+          // Replace with your publishable key from Stripe Dashboard
+          // For development, we're using a test publishable key that works with test cards
+          const stripePublishableKey = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+          
+          // Initialize Stripe
+          const stripe = Stripe(stripePublishableKey);
+          
+          // Stripe Elements
+          const elements = stripe.elements();
+          
+          // Custom styling for the card element
+          const style = {
+            base: {
+              color: '#333333',
+              fontFamily: 'Open Sans, sans-serif',
+              fontSize: '16px',
+              '::placeholder': {
+                color: '#aab7c4'
+              },
+              padding: '10px 12px',
+            },
+            invalid: {
+              color: '#dc3545',
+              iconColor: '#dc3545'
+            }
+          };
+          
+          // Create and mount the card Element
+          const card = elements.create('card', {
+            style: style,
+            hidePostalCode: true // Removing postal code requirement for international payments
+          });
+          
+          card.mount('#payment-element');
+          
+          // Handle real-time validation errors
+          card.addEventListener('change', function(event) {
+            const displayError = document.getElementById('payment-message');
+            
+            if (event.error) {
+              displayError.textContent = event.error.message;
+              displayError.style.color = 'var(--danger)';
+              isCardValid = false;
+            } else {
+              displayError.textContent = '';
+              // Only mark as valid if the card has complete input
+              isCardValid = event.complete;
+            }
+          });
+          
+          // Store card in the global scope for the payment handler to use
+          window.stripeCard = card;
+          window.stripeInstance = stripe;
+          
+          console.log('Stripe Elements initialized successfully');
+        } catch (error) {
+          console.error('Error initializing Stripe:', error);
+          const paymentMessage = document.getElementById('payment-message');
+          paymentMessage.textContent = 'Failed to initialize payment form. Please try again later.';
+          paymentMessage.style.color = 'var(--danger)';
+        }
+      }
+      
+      // Handle card payment submission
+      async function handleCardPayment() {
+        if (!window.stripeCard || !window.stripeInstance) {
+          showPaymentError('Payment system not available. Please try again later.');
+          return;
+        }
+        
+        const submitButton = document.getElementById('submit-button');
+        const spinner = submitButton.querySelector('.spinner');
+        const buttonText = submitButton.querySelector('.button-text');
+        
+        // Get cardholder details
+        const cardholderName = document.getElementById('cardholder-name').value;
+        const cardholderEmail = document.getElementById('cardholder-email').value;
+        
+        // Validate inputs
+        if (!cardholderName || !cardholderEmail) {
+          showPaymentError('Please fill in your name and email address');
+          return;
+        }
+        
+        // Show loading state
+        submitButton.disabled = true;
+        if (spinner) spinner.style.display = 'inline-block';
+        if (buttonText) buttonText.textContent = 'Processing...';
+        
+        try {
+          // Get amount from the UI
+          const totalAmountElement = document.getElementById('total-amount');
+          const totalAmountText = totalAmountElement.textContent || '0 AED';
+          const totalAmount = totalAmountText.replace(/[^0-9.]/g, '');
+          
+          // Create a payment intent on the server
+          const response = await fetch('/stage2/create-payment-intent', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              amount: totalAmount,
+              currency: 'aed'
+            }),
+          });
+          
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          
+          const { clientSecret } = await response.json();
+          
+          // Confirm the payment
+          const { error, paymentIntent } = await window.stripeInstance.confirmCardPayment(clientSecret, {
+            payment_method: {
+              card: window.stripeCard,
+              billing_details: {
+                name: cardholderName,
+                email: cardholderEmail
+              }
+            }
+          });
+          
+          if (error) {
+            throw error;
+          }
+          
+          if (paymentIntent.status === 'succeeded') {
+            // Handle successful payment
+            handlePaymentSuccess(paymentIntent);
+          }
+          
+        } catch (error) {
+          console.error('Payment error:', error);
+          showPaymentError(error.message || 'An unexpected error occurred. Please try again.');
+          
+          // Reset button state
+          submitButton.disabled = false;
+          if (spinner) spinner.style.display = 'none';
+          if (buttonText) buttonText.textContent = 'Pay Now';
+        }
+      }
+      
+      // Show payment error message
+      function showPaymentError(message) {
+        const paymentMessage = document.getElementById('payment-message');
+        paymentMessage.textContent = message;
+        paymentMessage.style.color = 'var(--danger)';
+        
+        // Scroll to error message
+        paymentMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      
+      // Handle successful payment
+      function handlePaymentSuccess(paymentResult) {
+        console.log('Payment successful:', paymentResult);
+        
+        // For demo, transform the payment form into a success message
+        const paymentOptions = document.querySelector('.payment-options');
+        
+        // Create success message HTML
+        const successHTML = `
+          <div class="card" style="text-align: center; padding: 3rem 2rem;">
+            <div style="background-color: var(--primary-light); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="var(--primary)"/>
+              </svg>
+            </div>
+            <h3>Payment Successful!</h3>
+            <p>Your payment has been processed successfully. Your business setup process will begin shortly.</p>
+            <p>Reference: <strong>${paymentResult.id}</strong></p>
+            <p style="margin-bottom: 2rem;">A receipt has been sent to ${document.getElementById('cardholder-email').value}</p>
+            <a href="http://localhost:5173/" class="payment-button" style="text-decoration: none; display: inline-block; max-width: 300px; margin: 0 auto;">
+              Continue to Client Portal
+            </a>
+          </div>
+        `;
+        
+        // Replace payment form with success message
+        paymentOptions.innerHTML = successHTML;
+        
+        // Save successful payment info to localStorage for demo purposes
+        // In a real implementation, this would be handled by your server
+        const paymentInfo = {
+          paymentId: paymentResult.id,
+          amount: document.getElementById('total-amount').textContent,
+          date: new Date().toISOString(),
+          proposal: JSON.parse(localStorage.getItem('selectedProposal')),
+          user: JSON.parse(localStorage.getItem('userData')),
+          status: 'completed'
+        };
+        
+        // Store payment info in localStorage
+        localStorage.setItem('lastPayment', JSON.stringify(paymentInfo));
+        
+        // In a real application, you'd redirect to a success page or the client portal
+        // window.location.href = '/client-portal';
+      }
+    });
+
+    // Function to populate proposal details
+    function populateProposalDetails(proposal, userData) {
+      if (!proposal || !proposal.recommendedFreeZone) {
+        console.error('No valid proposal found in localStorage');
+        return;
+      }
+      
+      // Update proposal title
+      document.getElementById('proposal-title').textContent = `${proposal.recommendedFreeZone} Proposal`;
+      
+      // Update business profile
+      document.getElementById('business-type').textContent = `Business Type: ${userData.businessCategory || 'Not specified'}`;
+      document.getElementById('freezone-type').textContent = `Free Zone: ${proposal.recommendedFreeZone}`;
+      document.getElementById('location').textContent = `Location: Dubai, UAE`;
+      document.getElementById('visa-count').textContent = `Visa Count: ${proposal.featuresAndAttributes?.maximumVisas || 'Not specified'}`;
+      
+      // Update business activities
+      const activityList = document.getElementById('activity-list');
+      activityList.innerHTML = '';
+      if (proposal.featuresAndAttributes && proposal.featuresAndAttributes.maximumActivities) {
+        const li = document.createElement('li');
+        li.textContent = `Maximum allowed activities: ${proposal.featuresAndAttributes.maximumActivities}`;
+        activityList.appendChild(li);
+      }
+      
+      if (userData.businessActivity) {
+        const li = document.createElement('li');
+        li.textContent = `Selected activity: ${userData.businessActivity}`;
+        activityList.appendChild(li);
+      }
+      
+      // Update setup process
+      const setupProcessList = document.getElementById('setup-process-list');
+      setupProcessList.innerHTML = '';
+      
+      if (proposal.setupProcess && Array.isArray(proposal.setupProcess)) {
+        proposal.setupProcess.forEach(step => {
+          const li = document.createElement('li');
+          li.textContent = step;
+          setupProcessList.appendChild(li);
+        });
+      } else {
+        const li = document.createElement('li');
+        li.textContent = 'Standard business setup process will be followed';
+        setupProcessList.appendChild(li);
+      }
+      
+      // Update cost breakdown
+      if (proposal.costBreakdown) {
+        document.getElementById('license-fee').textContent = 
+          `${numberWithCommas(proposal.costBreakdown.licenseSetupFee || 0)} AED`;
+        
+        const visaQuantity = parseInt(userData.visas) || 3;
+        document.getElementById('visa-quantity').textContent = visaQuantity;
+        document.getElementById('visa-fee').textContent = 
+          `${numberWithCommas(proposal.costBreakdown.visaFees * visaQuantity || 0)} AED`;
+        
+        document.getElementById('office-fee').textContent = 
+          `${numberWithCommas(proposal.costBreakdown.officeCost || 0)} AED`;
+        
+        document.getElementById('service-fee').textContent = 
+          `${numberWithCommas(proposal.costBreakdown.otherFees || 0)} AED`;
+        
+        document.getElementById('total-amount').textContent = 
+          `${numberWithCommas(proposal.costBreakdown.total || 0)} AED`;
+      }
+    }
+    
+    // Helper function to format numbers with commas
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    
+    // Handle wire transfer submission
+    function handleWireTransferSubmit() {
+      const name = document.getElementById('wire-transfer-name').value;
+      const email = document.getElementById('wire-transfer-email').value;
+      
+      if (!name || !email) {
+        alert('Please fill in your name and email address');
+        return;
+      }
+      
+      // In a real implementation, this would submit to your server
+      // For demonstration purposes, we'll just show an alert
+      alert(`Wire transfer details have been sent to ${email}. Please complete your transfer using the bank details provided.`);
+      
+      // In a real application, you would redirect to a thank you page
+      // window.location.href = '/payment-thank-you.html';
+    }
+
+    // Generate PDF function
+    function generatePDF() {
+      // Show loading overlay
+      const overlay = document.getElementById('pdf-overlay');
+      overlay.style.display = 'flex';
+      
+      // Get proposal and user data
+      const selectedProposal = JSON.parse(localStorage.getItem('selectedProposal')) || {};
+      const userData = JSON.parse(localStorage.getItem('userData')) || {};
+      
+      try {
+        // For demonstration - in a real implementation, you'd generate a PDF
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          alert('PDF has been generated and downloaded.');
+        }, 2000);
+      } catch (error) {
+        console.error('Error generating PDF:', error);
+        overlay.style.display = 'none';
+        alert('There was an error generating the PDF. Please try again.');
+      }
+    }
+  </script>
+</body>
+</html>

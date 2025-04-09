@@ -1,0 +1,145 @@
+.comparison-section {
+  max-width: 1400px;
+  margin: 100px auto;
+  padding: 0 24px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  position: relative;
+}
+
+.comparison-header {
+  text-align: center;
+  padding: 60px 20px 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.comparison-title {
+  color: #1a2340;
+  font-size: 42px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.comparison-subtitle {
+  color: #64748b;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.comparison-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  margin-bottom: 60px;
+}
+
+.comparison-label {
+  grid-column: 1;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 18px;
+}
+
+.zola-value {
+  grid-column: 2;
+  background-color: #f1f5fb;
+  padding: 24px 40px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.competitor-value {
+  grid-column: 3;
+  padding: 24px 40px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  transition: all 0.3s ease;
+}
+
+.column-header {
+  grid-row: 1;
+  padding: 30px 20px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  color: #1a2340;
+  background-color: #f8f9fc;
+}
+
+.column-header.zola {
+  grid-column: 2;
+  background-color: #e8f0fb;
+  color: #1a2340;
+  border-bottom: 2px solid #1a2340;
+}
+
+.column-header.competitor {
+  grid-column: 3;
+  color: #64748b;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.value-text {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.zola-value .value-text {
+  color: #1a2340;
+}
+
+.competitor-value .value-text {
+  color: #64748b;
+}
+
+.value-label {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.zola-value:hover, .competitor-value:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  z-index: 2;
+}
+
+.zola-value:hover {
+  background-color: #e8f0fb;
+}
+
+.zola-value::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 0;
+  background-color: #c4b087; /* Gold accent color */
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: height 0.3s ease;
+}
+
+.zola-value:hover::after {
+  height: 40px;
+}

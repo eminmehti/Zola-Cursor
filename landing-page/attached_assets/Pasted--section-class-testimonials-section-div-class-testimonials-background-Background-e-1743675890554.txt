@@ -1,0 +1,54 @@
+<section class="testimonials-section">
+  <div class="testimonials-background">
+    <!-- Background elements will be inserted here -->
+  </div>
+  
+  <div class="section-content">
+    <div class="section-header">
+      <h4 class="section-subtitle">CLIENT TESTIMONIALS</h4>
+      <h2 class="section-title">Success Stories from Industry Leaders</h2>
+      <p class="section-description">Hear what our satisfied clients have to say about their experience with Zola</p>
+    </div>
+    
+    <div class="testimonial-carousel-container">
+      <div class="testimonial-carousel swiper">
+        <div class="swiper-wrapper">
+          <!-- Testimonial 1 -->
+          <div class="testimonial-card swiper-slide">
+            <div class="card-content">
+              <div class="rating">
+                <!-- 5 stars -->
+                <svg><!-- Star icon --></svg>
+                <!-- Repeat for 5 stars -->
+              </div>
+              <div class="testimonial-text">
+                <p>As a tech startup entering the UAE, we needed a partner who understood our unique needs. Zola provided tailored solutions that accelerated our growth in the MENA region.</p>
+              </div>
+              <div class="client-info">
+                <div class="client-avatar">
+                  <img src="path/to/avatar.jpg" alt="Mohammed Al-Farsi">
+                </div>
+                <div class="client-details">
+                  <h4 class="client-name">Mohammed Al-Farsi</h4>
+                  <p class="client-position">Founder, InnovateAI</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Repeat for other testimonials -->
+        </div>
+      </div>
+      
+      <!-- Navigation Controls -->
+      <div class="testimonial-controls">
+        <button class="testimonial-button-prev">
+          <svg><!-- Left arrow icon --></svg>
+        </button>
+        <div class="testimonial-pagination"></div>
+        <button class="testimonial-button-next">
+          <svg><!-- Right arrow icon --></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

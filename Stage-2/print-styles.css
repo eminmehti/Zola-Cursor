@@ -1,0 +1,221 @@
+/* print-styles.css */
+@media print {
+  /* General reset for print */
+  body {
+    background: white !important;
+    color: black !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 12pt !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Hide non-printable elements */
+  .header, 
+  .sidebar, 
+  .card-actions, 
+  .select-btn,
+  .loading,
+  .error-message,
+  .generate-btn {
+    display: none !important;
+  }
+  
+  /* Main content container */
+  .container {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .main-content {
+    width: 100% !important;
+    padding: 0 !important;
+  }
+  
+  /* Proposal card */
+  #proposal-content {
+    display: block !important;
+  }
+  
+  .proposal-card {
+    display: block !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* Header with logo */
+  .print-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-bottom: 2px solid #003366 !important;
+    padding-bottom: 15px !important;
+    margin-bottom: 30px !important;
+  }
+  
+  .print-logo {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 28pt !important;
+    font-weight: 700 !important;
+    color: #003366 !important;
+    letter-spacing: -1px !important;
+  }
+  
+  .print-date {
+    font-size: 10pt !important;
+    color: #333333 !important;
+  }
+  
+  /* Proposal title */
+  .freezone-title {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 24pt !important;
+    font-weight: 700 !important;
+    color: #003366 !important;
+    margin: 20px 0 15px 0 !important;
+    text-align: center !important;
+    border-bottom: 1px solid #CCCCCC !important;
+    padding-bottom: 15px !important;
+  }
+  
+  /* Intro text */
+  .intro-text {
+    font-size: 12pt !important;
+    margin: 15px 0 25px 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Why recommended box */
+  .why-recommended {
+    background-color: #E5EBF2 !important;
+    border: 1px solid #003366 !important;
+    border-radius: 4px !important;
+    padding: 15px 20px !important;
+    margin: 20px 0 25px 0 !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* Section headers */
+  h3 {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 14pt !important;
+    font-weight: 600 !important;
+    color: #003366 !important;
+    margin: 25px 0 15px 0 !important;
+    padding-bottom: 5px !important;
+    border-bottom: 1px solid #CCCCCC !important;
+  }
+  
+  /* Benefits list */
+  .feature-list {
+    margin: 15px 0 20px 25px !important;
+    padding: 0 !important;
+    page-break-inside: avoid !important;
+  }
+  
+  .feature-list li {
+    margin-bottom: 8px !important;
+    line-height: 1.4 !important;
+    color: #333333 !important;
+  }
+  
+  /* Tables */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 15px 0 25px 0 !important;
+    page-break-inside: avoid !important;
+  }
+  
+  table tr {
+    border-bottom: 1px solid #CCCCCC !important;
+  }
+  
+  table td {
+    padding: 10px 5px !important;
+    vertical-align: top !important;
+    color: #333333 !important;
+  }
+  
+  table td:first-child {
+    width: 200px !important;
+    font-weight: 600 !important;
+    color: #003366 !important;
+  }
+  
+  /* Setup process */
+  .setup-process {
+    margin: 20px 0 !important;
+    page-break-inside: avoid !important;
+  }
+  
+  .setup-step {
+    margin-bottom: 10px !important;
+    padding: 10px 15px 10px 30px !important;
+    background-color: #F2F2F2 !important;
+    border-radius: 4px !important;
+    position: relative !important;
+    color: #333333 !important;
+  }
+  
+  /* Total cost row */
+  .total-and-select {
+    margin-top: 30px !important;
+    padding-top: 15px !important;
+    border-top: 2px solid #003366 !important;
+    page-break-inside: avoid !important;
+  }
+  
+  .total-cost {
+    font-size: 14pt !important;
+    font-weight: 700 !important;
+    color: #003366 !important;
+    text-align: right !important;
+  }
+  
+  /* Footer */
+  .print-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    font-size: 9pt !important;
+    color: #333333 !important;
+    margin-top: 40px !important;
+    padding-top: 15px !important;
+    border-top: 1px solid #CCCCCC !important;
+  }
+  
+  /* Section dividers */
+  .section-divider {
+    display: none !important; /* Hide default dividers */
+  }
+  
+  /* Page breaks */
+  .page-break {
+    page-break-after: always !important;
+  }
+  
+  /* Hide default buttons */
+  button {
+    display: none !important;
+  }
+  
+  /* Add page numbers */
+  @page {
+    margin: 2cm;
+  }
+  
+  @page :first {
+    margin-top: 3cm;
+  }
+}

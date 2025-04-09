@@ -1,0 +1,158 @@
+1. Overall Container & Layout
+Create a section or div for the hero area that spans the full width of the screen (100% width).
+
+Set a light purple or lavender background (for example: #f8f6ff or similar) that contrasts well with darker text.
+
+Ensure the hero section has sufficient top and bottom padding (e.g., padding: 4rem 2rem;) so it appears spacious on desktop and remains readable on mobile.
+
+2. Header (Top Navigation) Details
+Header Container: Place a header (e.g. <header>) at the top of the hero section, usually inside the same container but visually separated or with its own container. Use flex or grid for alignment.
+
+Logo/Brand Name (Zola):
+
+Put the word “Zola” in the top-left corner, styled as the brand.
+
+You can use a strong or distinct font, slightly larger than the navigation items (for instance, 1.25rem to 1.5rem in size).
+
+Consider a bold or semibold weight to differentiate it from other text.
+
+Navigation Links (Home, Services, The Process, Partnerships, Why UAE):
+
+Place these links in a row (e.g., <nav> with an unordered list) centered or distributed between the logo and the CTA button.
+
+Use a minimal, clean font (e.g., a sans-serif style), sized around 1rem with normal or medium weight.
+
+Add some spacing or padding between each link (e.g., margin: 0 1rem;).
+
+“Start Now” Button:
+
+On the far right of the header, add a prominent button labeled “Start Now”.
+
+Use a dark background (e.g., #2C2C2C or a branded dark blue/purple) with white text for high contrast, OR use the brand’s primary color if it’s consistent.
+
+Keep the button style consistent with any other CTAs (e.g., rounded corners, hover states).
+
+3. Main Hero Content Layout
+Two-Column Layout (on desktop screens):
+
+Left column: Headline, subtitle text, and call-to-action buttons.
+
+Right column: Illustration showing the female character with a background analytics/card design.
+
+On mobile screens, stack the text content on top and place the illustration beneath (or vice versa) for a more vertical flow.
+
+4. Headline Text
+Headline Copy: “AI-Powered Consulting for Relocating to the UAE”
+
+Font Size: Large enough to be the immediate focal point (e.g., 2.5rem–3rem on desktop, scaling down to ~1.8rem on mobile).
+
+Font Weight: Bold or black (depending on your chosen font).
+
+Color: A dark gray or near-black (e.g., #1C1C1C or #2C2C2C), so it’s highly readable on the light background.
+
+Line Height: Slightly looser than normal for readability (e.g., 1.2–1.3).
+
+Subheading/Tagline: “Helping individuals and businesses seamlessly move to the United Arab Emirates with advanced technology and expertise.”
+
+Font Size: Smaller than the headline (e.g., 1rem–1.2rem).
+
+Color: A medium gray (e.g., #555555) for hierarchy.
+
+Line Height: Comfortable for multiple lines, e.g., 1.5.
+
+5. Call-to-Action (CTA) Buttons Below the Text
+Primary CTA: “Create an account”
+
+Button Style:
+
+Background color: a bold purple (e.g., #6360FF or #6D5BD0)
+
+Text color: white (#FFFFFF)
+
+Slightly rounded corners (e.g., border-radius: 4px or 8px).
+
+Padding: e.g., 0.75rem 1.5rem.
+
+Font Weight: Medium or semibold for the text.
+
+Hover State: Consider darkening or lightening the background color.
+
+Secondary CTA: “Learn more”
+
+Style:
+
+Possibly a plain text link or subtle button.
+
+Use the same brand color as the primary CTA for the text, but with no background fill.
+
+Alternatively, use a lighter shade of the primary color for the text.
+
+6. Illustration / Graphic on the Right
+Female Character:
+
+The illustration depicts a woman with black hair wearing a purple top, waving.
+
+If you have the asset as an SVG or PNG, place it in the right column.
+
+Ensure it is responsive (set max-width to, for example, 350px–400px on desktop; auto-scale on mobile).
+
+Analytics/Map Card:
+
+Behind the character is a stylized card or dashboard showing a circle chart, a map of the UAE, and location pins.
+
+Use layering or z-index to place the woman’s hand in front and the card behind.
+
+Keep the colors consistent: Light background for the card, with simple icon shapes in the brand’s primary or secondary hues.
+
+City Skyline Backdrop (UAE Landmarks):
+
+A faint, translucent silhouette of UAE buildings (e.g., Burj Khalifa, Burj Al Arab) is in the overall hero background.
+
+This is a background layer with low opacity (or a lighter color) so it doesn’t overpower the text.
+
+You can place it in the overall hero’s background using a background-image (centered, no-repeat, or cover) or as an absolutely positioned SVG/PNG.
+
+7. Spacing & Alignment
+Vertical Spacing: Keep consistent vertical spacing between headline, subtitle, and CTA buttons (e.g., 1rem to 1.5rem).
+
+Horizontal Spacing (Columns):
+
+On desktop, a typical grid layout might have 50% width for the text content and 50% for the illustration.
+
+Or use a 60/40 split, depending on how large the illustration is.
+
+Maintain a comfortable margin between the left and right columns (e.g., 2rem–3rem gap).
+
+Mobile Responsiveness:
+
+Stack the text (headline, subheading, CTAs) above the illustration in a single column.
+
+Make sure the font sizes scale down appropriately.
+
+The menu might collapse into a hamburger menu for small screens, and the “Start Now” button could be displayed as a smaller icon or remain as is.
+
+8. Typography & Color Palette Suggestions
+Font Families:
+
+Headline: A bold, modern sans-serif font (e.g., Poppins, Montserrat, or similar).
+
+Body: A clean sans-serif for the subheading and navigation (e.g., Open Sans, Roboto, or similar).
+
+Color Palette (approximate):
+
+Background: Light lavender (#F8F6FF) or a very pale purple.
+
+Primary Accent (Buttons, Highlights): Vibrant purple (#6360FF / #6D5BD0).
+
+Text: Dark gray or near black (#1C1C1C / #2C2C2C), with sub-text in a mid-gray (#555555).
+
+9. Final Touches & Quality Checks
+Check Readability: Ensure the main headline contrasts strongly with the background.
+
+Check Button Accessibility: The “Create an account” button color contrast must meet accessibility guidelines (WCAG AA at least).
+
+Check Image File Sizes: Keep illustration and background images optimized so the hero section loads quickly.
+
+Hover & Focus States: Provide clear feedback on interactive elements (links, buttons) for both mouse and keyboard users.
+
+Typography Hierarchy: Confirm that the headline is the largest text, subheading smaller, nav links smaller still, so the user’s eye is guided properly.

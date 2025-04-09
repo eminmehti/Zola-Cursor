@@ -1,0 +1,7 @@
+Stage-2/.env
+# Environment variables
+*.env
+Stage-2/.env
+node_modules/
+.DS_Store
+*.log

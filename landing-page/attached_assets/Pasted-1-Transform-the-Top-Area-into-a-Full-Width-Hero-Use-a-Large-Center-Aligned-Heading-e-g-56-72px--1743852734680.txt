@@ -1,0 +1,143 @@
+1. Transform the Top Area into a Full‐Width Hero
+Use a Large, Center‐Aligned Heading (e.g. 56–72px) for your main statement, such as “Our Vision.”
+
+Add a Subheading below in a smaller size (e.g. 18–20px), keeping it short and punchy.
+
+Center All Text in this hero area, with ample spacing around each line to give a minimalist look.
+
+Implementation Tip
+
+css
+Copy
+Edit
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero h1 {
+  font-size: 3.5rem; /* Adjust as needed */
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.125rem;
+  line-height: 1.5;
+  margin-top: 20px;
+}
+2. Introduce a Subtle Background or Gradient
+Choose Two Complementary Shades from your brand color palette.
+
+Apply a Gentle Gradient (e.g. top to bottom or left to right) as the background of this hero section.
+
+Keep It Soft so the text remains readable and the gradient looks premium.
+
+Implementation Tip
+
+css
+Copy
+Edit
+.hero {
+  /* Example: from darker to slightly lighter navy */
+  background: linear-gradient(135deg, #0D1B2A 0%, #1B263B 100%);
+  color: #FFFFFF; /* Ensure text is legible */
+}
+3. Create a Horizontal “Stats Bar” Directly Below
+Pull Your Key Stats (e.g. “200+ Businesses Served,” “500+ Visas Granted”) into 2–4 columns in a single row.
+
+Use Simple Icons or Light Dividers between columns for visual interest.
+
+Center Each Stat with a bold number and a short label underneath to keep it tidy.
+
+Implementation Tip
+
+html
+Copy
+Edit
+<div class="stats-bar">
+  <div class="stat">
+    <h3>200+</h3>
+    <p>Businesses</p>
+  </div>
+  <div class="stat">
+    <h3>500+</h3>
+    <p>Visas</p>
+  </div>
+  <!-- etc. -->
+</div>
+css
+Copy
+Edit
+.stats-bar {
+  display: flex;
+  justify-content: center; /* or space-around, space-between */
+  padding: 40px 20px;
+  background: #FFFFFF; /* Contrasts the hero background */
+}
+
+.stat {
+  text-align: center;
+  margin: 0 20px;
+}
+4. Float or Overlap the Hero Image
+Position the Hero Image so that it slightly overlaps into the stats section below.
+
+Use Negative Margin or Absolute Positioning to achieve this layered “float” effect.
+
+Ensure the Image is High Quality and relevant, since it will be visually prominent.
+
+Implementation Tip
+
+css
+Copy
+Edit
+.hero-image {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto; /* center it */
+  top: -50px; /* negative margin to overlap */
+  z-index: 2; /* ensures it stays above the stats bar */
+}
+5. Introduce a Single, Clean Call‐to‐Action (CTA)
+Place One Button below your subheading or at the bottom of the hero text.
+
+Keep the CTA Minimal—a single concise message like “Learn More” or “Get Started.”
+
+Use Contrast (e.g. a bright accent color if your hero background is dark).
+
+Implementation Tip
+
+css
+Copy
+Edit
+.cta-button {
+  display: inline-block;
+  background-color: #F9A825; /* Example accent color */
+  color: #FFFFFF;
+  padding: 15px 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  margin-top: 30px;
+  transition: background-color 0.2s;
+}
+.cta-button:hover {
+  background-color: #CF8C00;
+}
+6. Limit Your Color Palette & Fonts
+Stick to 2–3 Colors Max (primary, secondary, accent) to keep the design cohesive.
+
+Use One Main Sans‐Serif Font for a clean, modern look.
+
+Ensure Consistent Spacing and Font Weights to maintain that high‐end feel.
+
+Summary of the New Structure
+Full‐Width Hero with centered text and a subtle gradient background.
+
+Clean Typography for your main message and concise subheading.
+
+Horizontal Stats Bar beneath the hero to highlight key achievements.
+
+Floating/Overlapping Hero Image for a modern, layered appearance.
+
+Minimal CTA to direct user action without cluttering.

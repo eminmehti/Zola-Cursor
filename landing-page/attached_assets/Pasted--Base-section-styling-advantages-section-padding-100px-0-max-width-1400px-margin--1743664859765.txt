@@ -1,0 +1,198 @@
+/* Base section styling */
+.advantages-section {
+  padding: 100px 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  background-color: #f8f9fc;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 64px;
+  padding: 0 24px;
+}
+
+.section-title {
+  font-size: 42px;
+  color: #1a2340;
+  margin-bottom: 16px;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #1a2340, #c4b087);
+}
+
+.section-subtitle {
+  font-size: 18px;
+  color: #64748b;
+  max-width: 700px;
+  margin: 24px auto 0;
+  line-height: 1.6;
+}
+
+/* Metro grid layout */
+.metro-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto;
+  gap: 24px;
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Tile sizing and positioning */
+.metro-tile {
+  background-color: white;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.metro-tile.large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.metro-tile.medium {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.metro-tile.small {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+/* Hover effects */
+.metro-tile:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.metro-tile::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1a2340, #c4b087);
+  transition: width 0.3s ease;
+}
+
+.metro-tile:hover::after {
+  width: 100%;
+}
+
+/* Tile content styling */
+.tile-icon {
+  margin-bottom: 24px;
+  position: relative;
+  display: inline-block;
+}
+
+.tile-icon::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background-color: rgba(196, 176, 135, 0.1);
+  border-radius: 50%;
+  z-index: -1;
+  transform: scale(0);
+  transition: transform 0.3s ease;
+}
+
+.metro-tile:hover .tile-icon::before {
+  transform: scale(1);
+}
+
+.advantage-icon {
+  transition: transform 0.3s ease;
+}
+
+.metro-tile:hover .advantage-icon {
+  transform: translateY(-5px);
+}
+
+.tile-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a2340;
+  margin-bottom: 16px;
+}
+
+.tile-description {
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Highlight tags */
+.tile-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.highlight-tag {
+  padding: 6px 12px;
+  background-color: rgba(196, 176, 135, 0.1);
+  border-radius: 100px;
+  font-size: 14px;
+  color: #1a2340;
+  font-weight: 500;
+}
+
+/* Small tile specific styling */
+.metro-tile.small .tile-icon {
+  margin-bottom: 16px;
+}
+
+.metro-tile.small .tile-title {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+/* CTA button */
+.cta-container {
+  margin-top: 64px;
+  text-align: center;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 16px 32px;
+  background-color: #1a2340;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(26, 35, 64, 0.2);
+}
+
+.cta-button:hover {
+  background-color: #263154;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(26, 35, 64, 0.3);
+}

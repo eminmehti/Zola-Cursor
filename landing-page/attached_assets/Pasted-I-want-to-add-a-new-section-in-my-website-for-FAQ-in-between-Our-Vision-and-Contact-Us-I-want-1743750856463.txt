@@ -1,0 +1,21 @@
+I want to add a new section in my website for "FAQ" in between "Our Vision" and "Contact Us". I want you to give me a comprehensive prompt that I can give to an AI system. It should be clear, actionable instructions and implementation details to help me create a minimalistic, premium, and ultra-modern design section for FAQ's. I want the FAQ's to open up when I click on the respective question, opening the answer to the FAQ that the user clicked on. I want the section to incorporate more dynamic elements in it. I want this section to be ultra modern and dynamic. The color pallet and typography needs to stay consist with the rest of the branding color so keep that in mind. 
+
+Below I provided you with the list of FAQ's that I want to be displayed in the section. 
+
+FAQ's
+How do you handle sensitive documents and personal data?
+We only ask for the information we truly need to provide our services, and we never store it unnecessarily. Rest assured, we don’t share your details with any third party without your explicit consent.
+Do I need to be physically present in the UAE at any stage of the process?
+No. Our streamlined process lets you handle everything from the comfort of your home. We use technology to keep things simple, so there’s usually no need for in-person visits.
+How quickly can I expect my visa to be processed using your services?
+Timeframes can vary based on government regulations and individual circumstances. However, our AI-powered approach significantly speeds up approvals. Many clients find that their visas are issued in a fraction of the usual time.
+What type of businesses benefit most from setting up in the UAE through Zola?
+We work with everyone—from freelancers and small startups to large corporations. Our AI-driven workflows handle everything from straightforward business licenses to more complex Free Zone or Mainland company structures.
+Are there hidden fees or unexpected costs I should anticipate?
+We’re all about transparency. Our custom proposal clearly outlines the total price and provides a detailed cost breakdown. If anything extra comes up—such as translations or official attestations—we’ll let you know right away.
+Does Zola handle renewals, expansions, or additional government applications down the road?
+Yes. We view ourselves as long-term partners, not just a one-time service. We support clients with ongoing compliance and renewals, and can also help if you decide to expand or modify your trade license later on.
+Why are your fees lower if you’re also offering more advanced solutions?
+Our AI automates a lot of processes, so we don’t need large teams to handle repetitive tasks. We pass those savings on to you, providing top-notch services at competitive rates.
+How do I get a personalized quote or proposal?
+Just click “Start Now” and tell us what you need. Our system does the heavy lifting behind the scenes, and we’ll send you a customized plan tailored to your requirements.

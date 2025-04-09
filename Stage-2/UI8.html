@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZOLA – Residence Visas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #003366; /* Navy Blue */
+      --primary-hover: #004080;
+      --primary-light: #E5EBF2;
+      --secondary: #003366; /* Navy Blue */
+      --bg-white: #FFFFFF;
+      --bg-light: #F2F2F2; /* Soft Gray */
+      --text-dark: #003366; /* Navy Blue for headings */
+      --text-secondary: #333333; /* Dark gray for body text */
+      --text-light: #666666;
+      --border-light: #CCCCCC; /* Metallic silver */
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-secondary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    
+    header {
+      background-color: var(--bg-white);
+      padding: 1.5rem 2.5rem;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 4px;
+      background-color: var(--border-light);
+      position: relative;
+    }
+    
+    .progress-fill {
+      width: 80%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+      transition: var(--transition);
+    }
+    
+    .main-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 4rem 2rem;
+    }
+    
+    .content-card {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 3rem;
+      width: 100%;
+      max-width: 600px;
+      transition: var(--transition);
+    }
+    
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+    
+    .input-container {
+      margin-bottom: 3rem;
+      background-color: var(--bg-light);
+      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+    
+    .input-container:focus-within {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .visa-control {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .visa-control button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-white);
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+      font-size: 1.25rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .visa-control button:hover {
+      background-color: var(--primary-light);
+    }
+    
+    .visa-control button:disabled {
+      background-color: var(--bg-white);
+      border-color: var(--border-light);
+      color: var(--text-light);
+      cursor: not-allowed;
+    }
+    
+    .visa-input {
+      width: 4rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      padding: 0.5rem;
+      border: none;
+      background-color: transparent;
+      color: var(--text-dark);
+    }
+    
+    .visa-input:focus {
+      outline: none;
+    }
+    
+    .visa-input::-webkit-outer-spin-button,
+    .visa-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    
+    .visa-input[type=number] {
+      -moz-appearance: textfield;
+    }
+    
+    .visa-label {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    
+    .buttons-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .btn {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .btn-back {
+      background-color: var(--bg-white);
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border-light);
+    }
+    
+    .btn-back:hover {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+    
+    .btn-next {
+      background-color: var(--text-light);
+      color: white;
+      border: none;
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    
+    .btn-next.active {
+      background-color: var(--primary);
+      opacity: 1;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .btn-next.active:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 2rem 1.5rem;
+      }
+      
+      .content-card {
+        padding: 2rem 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.75rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+      
+      .btn {
+        padding: 0.875rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">ZOLA</div>
+  </header>
+  
+  <div class="progress-container">
+    <div class="progress-fill"></div>
+  </div>
+  
+  <div class="main-container">
+    <div class="content-card">
+      <h1>How many residence visas will you need?</h1>
+      <p class="subtitle">
+        In addition to visas for your shareholders, you can apply for 
+        residence visas for your employees and family members.
+      </p>
+      
+      <div class="input-container">
+        <div class="visa-label">Number of visas</div>
+        <div class="visa-control">
+          <button id="decrementBtn" disabled>-</button>
+          <input type="number" id="visaInput" class="visa-input" value="1" min="1" max="99">
+          <button id="incrementBtn">+</button>
+        </div>
+      </div>
+      
+      <div class="buttons-row">
+        <button class="btn btn-back" id="prevBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+          </svg>
+          Back
+        </button>
+        
+        <button class="btn btn-next active" id="nextBtn">
+          Continue
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const visaInput = document.getElementById("visaInput");
+    const decrementBtn = document.getElementById("decrementBtn");
+    const incrementBtn = document.getElementById("incrementBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    
+    // Update min/max limits and button states
+    function updateControls() {
+      const value = parseInt(visaInput.value, 10);
+      
+      if (isNaN(value) || value <= 1) {
+        visaInput.value = 1;
+        decrementBtn.disabled = true;
+      } else {
+        decrementBtn.disabled = false;
+      }
+      
+      if (value >= 99) {
+        visaInput.value = 99;
+        incrementBtn.disabled = true;
+      } else {
+        incrementBtn.disabled = false;
+      }
+      
+      // Enable/disable next button based on valid input
+      if (!isNaN(value) && value >= 1 && value <= 99) {
+        nextBtn.classList.add("active");
+        nextBtn.disabled = false;
+      } else {
+        nextBtn.classList.remove("active");
+        nextBtn.disabled = true;
+      }
+    }
+    
+    // Initialize controls
+    updateControls();
+    
+    // Button handlers
+    decrementBtn.addEventListener("click", () => {
+      visaInput.value = Math.max(1, parseInt(visaInput.value, 10) - 1);
+      updateControls();
+    });
+    
+    incrementBtn.addEventListener("click", () => {
+      visaInput.value = Math.min(99, parseInt(visaInput.value, 10) + 1);
+      updateControls();
+    });
+    
+    // Input validation
+    visaInput.addEventListener("input", () => {
+      updateControls();
+    });
+    
+    // Previous -> go back to UI7
+    prevBtn.addEventListener("click", () => {
+      window.location.href = '/stage2/ui7';
+    });
+    
+    // Next -> save to server, then go to UI9
+    nextBtn.addEventListener("click", async () => {
+      const value = parseInt(visaInput.value, 10);
+      if (!isNaN(value) && value >= 1 && value <= 99) {
+        try {
+          await fetch('/stage2/save-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              question: 'visas',
+              answer: value
+            })
+          });
+          window.location.href = '/stage2/ui9';
+        } catch (err) {
+          console.error('Error saving visas:', err);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+

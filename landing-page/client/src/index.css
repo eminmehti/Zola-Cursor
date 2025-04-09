@@ -1,0 +1,652 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Poppins', 'Inter', sans-serif;
+  --color-primary: #1A1B40;
+  --color-accent: #c4b087;
+  --color-text-secondary: #475569;
+  --process-line-progress: 0%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(196, 176, 135, 0.3) rgba(26, 27, 64, 0.05);
+  }
+
+  html::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  html::-webkit-scrollbar-track {
+    background: rgba(26, 27, 64, 0.05);
+  }
+
+  html::-webkit-scrollbar-thumb {
+    background-color: rgba(196, 176, 135, 0.3);
+    border-radius: 20px;
+    border: 3px solid rgba(26, 27, 64, 0.05);
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: rgba(196, 176, 135, 0.2);
+    color: #1A1B40;
+  }
+  
+  a, button {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b087]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  }
+}
+
+/* Luxury Card Effects */
+.hover-outline-effect {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.hover-outline-effect::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid #c4b087;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hover-outline-effect:hover::after {
+  opacity: 0.5;
+  inset: -3px;
+}
+
+/* Accent hover effect */
+.hover-accent-effect {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.hover-accent-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 0;
+  background-color: #c4b087;
+  transition: height 0.4s ease;
+}
+
+.hover-accent-effect:hover::before {
+  height: 100%;
+}
+
+/* Shine hover effect */
+.hover-shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-shine-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: all 0.75s ease;
+  opacity: 0;
+}
+
+.hover-shine-effect:hover::before {
+  animation: shine 1.5s ease;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: 150%;
+    opacity: 0;
+  }
+}
+
+/* Pulse effect */
+.pulse-effect {
+  animation: subtle-pulse 4s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.01);
+  }
+}
+
+/* Comparison Section Animations */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(196, 176, 135, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(196, 176, 135, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(196, 176, 135, 0);
+  }
+}
+
+.comparison-row {
+  position: relative;
+  display: contents;
+}
+
+.comparison-row:hover .zola-value {
+  background-color: #e8f0fb;
+  animation: pulseGlow 1.5s infinite;
+}
+
+.comparison-row:hover .competitor-value {
+  opacity: 0.8;
+}
+
+.advantage-indicator {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.zola-value:hover .advantage-indicator {
+  opacity: 1;
+  right: 20px;
+}
+
+/* Premier Services Section Styles */
+.services-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  position: relative;
+  padding: 40px 32px;
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: calc(var(--card-index) * 0.1s);
+  opacity: 0;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Typography Styles for Services Section */
+h1.page-title {
+  font-family: var(--font-heading, sans-serif);
+  font-weight: 600;
+  font-size: 42px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #1a2340;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+h2.section-title {
+  font-family: var(--font-heading, sans-serif);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #1a2340;
+  margin-bottom: 12px;
+}
+
+h3.card-title {
+  font-family: var(--font-heading, sans-serif);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.3;
+  color: #1a2340;
+  margin-bottom: 12px;
+}
+
+.service-number {
+  font-family: var(--font-heading, sans-serif);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: #c4b087;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+p.description {
+  font-family: var(--font-primary, sans-serif);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #475569;
+  margin-bottom: 24px;
+}
+
+.benefits-title {
+  font-family: var(--font-primary, sans-serif);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 20px;
+}
+
+.benefit-item {
+  font-family: var(--font-primary, sans-serif);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #475569;
+  transition: transform 0.2s ease;
+}
+
+.benefit-item:hover {
+  transform: translateX(4px);
+}
+
+.explore-link {
+  position: relative;
+  color: #1a2340;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.explore-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #c4b087;
+  transition: width 0.3s ease;
+}
+
+.explore-link:hover {
+  color: #c4b087;
+}
+
+.explore-link:hover::after {
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Process Section Styles */
+.process-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  max-width: 1400px;
+  margin: 80px auto;
+  padding: 0 24px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.process-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Progress line between cards */
+.process-progress-line {
+  position: absolute;
+  top: 80px;
+  left: 80px;
+  right: 80px;
+  height: 2px;
+  background-color: #e2e8f0;
+  z-index: 0;
+}
+
+.process-progress-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: var(--process-line-progress, 0%);
+  background-color: var(--color-accent);
+  transition: width 1s ease-in-out;
+}
+
+@keyframes progress-line {
+  0% { background-position: 0% 0; }
+  100% { background-position: 100% 0; }
+}
+
+/* Tablet view */
+@media (max-width: 1024px) {
+  .process-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  
+  .process-progress-line {
+    display: none;
+  }
+  
+  .section-title {
+    font-size: 36px;
+  }
+  
+  .step-card:nth-child(5) {
+    grid-column: span 2;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+/* Mobile view */
+@media (max-width: 640px) {
+  .process-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .step-card {
+    max-width: 100%;
+  }
+  
+  .step-card:nth-child(5) {
+    grid-column: span 1;
+  }
+  
+  .section-title {
+    font-size: 32px;
+  }
+  
+  .section-description {
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+}
+
+.step-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 40px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+  transition-delay: calc(var(--step-index) * 0.1s);
+}
+
+.visible .step-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.step-number {
+  width: 60px;
+  height: 60px;
+  background-color: #1a2340;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  color: white;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 20px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.step-card:hover .step-number {
+  background-color: var(--color-accent);
+}
+
+.step-number::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+/* Step completion animation */
+@keyframes stepComplete {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.step-number.completed {
+  animation: stepComplete 0.5s ease forwards;
+  background-color: var(--color-accent);
+}
+
+/* Typography for Process Section */
+.section-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 42px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin-bottom: 12px;
+  color: #1a2340;
+}
+
+.section-subtitle {
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 8px;
+  color: var(--color-accent);
+}
+
+.section-description {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 64px;
+  color: var(--color-text-secondary);
+}
+
+.step-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #1a2340;
+}
+
+.step-description {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+/* Minimal Icon System */
+.step-icon {
+  width: 32px;
+  height: 32px;
+  stroke: var(--color-accent);
+  stroke-width: 1.5px;
+  fill: none;
+  margin: 0 auto 16px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.step-card:hover .step-icon {
+  transform: scale(1.1);
+}
+
+/* Adjustments for mobile view */
+.md\:hidden .step-icon {
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  transform: scale(0.7);
+}
+
+.md\:hidden .step-card:hover .step-icon {
+  transform: scale(0.85);
+}
+
+/* Premium Button Design */
+.process-cta {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.cta-button {
+  background-color: var(--color-primary, #1A1B40);
+  color: white;
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: 16px;
+  padding: 16px 32px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(26, 35, 64, 0.15);
+}
+
+.cta-button:hover {
+  background-color: #263154;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(26, 35, 64, 0.2);
+}
+
+.cta-button svg {
+  margin-left: 8px;
+  transition: transform 0.2s ease;
+}
+
+.cta-button:hover svg {
+  transform: translateX(4px);
+}
+
+/* Button responsive adaptations */
+@media (max-width: 768px) {
+  .process-cta {
+    margin-top: 40px;
+  }
+  
+  .cta-button {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .process-cta {
+    margin-top: 32px;
+  }
+  
+  .cta-button {
+    padding: 12px 24px;
+    width: 100%;
+    justify-content: center;
+    max-width: 300px;
+  }
+}
